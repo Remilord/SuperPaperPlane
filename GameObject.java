@@ -1,12 +1,15 @@
 import java.awt.*;
 import javax.swing.*;
-
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.io.File;
 abstract class GameObject extends JComponent{
   protected int positionX;
   protected int positionY;
   protected int largeur;
   protected int hauteur;
-  protected Image img;
+  protected BufferedImage img;
   public GameObject(int x, int y){
     this.positionY = y;
     this.positionX = x;
@@ -26,7 +29,11 @@ abstract class GameObject extends JComponent{
   public void setPositionY(int y){
     this.positionY = y;
   }
-  public  Image getImage() {
+  public void setImage(BufferedImage image){
+    this.img = image;
+  }
+
+  public BufferedImage getImage() {
     return null;
   }
 }

@@ -1,20 +1,23 @@
 import java.awt.*;
 import javax.swing.*;
 import java.io.File;
-
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.io.File;
 public class Avion extends GameObject{
-  private Image avionGauche;
-  private Image avionDroite;
-  private Image avionBas;
-  protected Image avionImage;
-  private Image crash;
+  private BufferedImage avionGauche;
+  private BufferedImage avionDroite;
+  private BufferedImage avionBas;
+  protected BufferedImage avionImage;
+  private BufferedImage crash;
   public Avion(int positionX, int positionY){
     super(positionX, positionY);
-    avionGauche = Toolkit.getDefaultToolkit().getImage(".."+File.separator+"image"+File.separator+"PionPlaneGauche.png");
-    avionDroite = Toolkit.getDefaultToolkit().getImage(".."+File.separator+"image"+File.separator+"PionPlane.png");
-    avionBas = Toolkit.getDefaultToolkit().getImage(".."+File.separator+"image"+File.separator+"PionPlaneBas.png");
-    crash = Toolkit.getDefaultToolkit().getImage(".."+File.separator+"image"+File.separator+"Crash.png");
-    avionImage = Toolkit.getDefaultToolkit().getImage(".."+File.separator+"image"+File.separator+"PionPlane.png");
+    avionGauche = Niveau.loadBufferedImage(".."+File.separator+"image"+File.separator+"PionPlaneGauche.png");
+    avionDroite = Niveau.loadBufferedImage(".."+File.separator+"image"+File.separator+"PionPlane.png");
+    avionBas = Niveau.loadBufferedImage(".."+File.separator+"image"+File.separator+"PionPlaneBas.png");
+    crash = Niveau.loadBufferedImage(".."+File.separator+"image"+File.separator+"Crash.png");
+    avionImage = Niveau.loadBufferedImage(".."+File.separator+"image"+File.separator+"PionPlane.png");
     this.largeur = getPositionX()+100;
     this.hauteur = 75;
   }
@@ -37,7 +40,7 @@ public class Avion extends GameObject{
       this.avionImage = this.crash;
   }
   @Override
-  public Image getImage() {
+  public BufferedImage getImage() {
     return avionImage;
   }
 
