@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -47,22 +48,29 @@ public class Niveau extends JPanel{
     }
   }
   public void run(){
+    Barre barre = new Barre(0, 0);
+    Barre barre2 = new Barre(0, 0);
     Avion avion = new Avion(50, 50);
-    Barre barre = new Barre(250, 50);
-    Barre barre2 = new Barre(500, 50);
-    this.addNewObject(avion);
     this.addNewObject(barre);
     this.addNewObject(barre2);
+    this.addNewObject(avion);
+    barre2.setPositionX(-500 + (int)(Math.random() * ((150 + 350) + 1)));
     while(true){
-      long temps_début_boucle = System.currentTimeMillis();
+      long temps_debut_boucle = System.currentTimeMillis();
 
-
-
-      barre.setPositionY(barre.getPositionY()-1);
-      barre2.setPositionY(barre2.getPositionY()-1);
+      barre.setPositionY(barre.getPositionY()-6);
+      barre2.setPositionY(barre2.getPositionY()-6);
+      if(barre.getPositionY()<=0-80){
+        barre.setPositionY(800);
+        barre.setPositionX(280 + (int)(Math.random() * ((400 - 280) + 1)));
+      }
+      if(barre2.getPositionY()<=0-80){
+        barre2.setPositionY(800);
+        barre2.setPositionX(-500 + (int)(Math.random() * ((500 + 150 - 250) + 1)));
+      }
 
       this.repaint();
-      long temps_consomme = temps_début_boucle - System.currentTimeMillis();
+      long temps_consomme = temps_debut_boucle - System.currentTimeMillis();
       try{
         Thread.sleep(16-temps_consomme); // 1000/60 = 16ms environ,.16..66666 arronti à 17. On y soustrait le temps consommé pour update et dessiner la frame
       }
