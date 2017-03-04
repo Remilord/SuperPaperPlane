@@ -19,7 +19,7 @@ public class Clavier extends KeyAdapter implements KeyListener{
     if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
       this.niveau.setEntreeUtilisateur(1);
     }
-    else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+    if (e.getKeyCode() == KeyEvent.VK_LEFT) {
       this.niveau.setEntreeUtilisateur(2);
     }
   }

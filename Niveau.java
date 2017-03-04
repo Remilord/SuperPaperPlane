@@ -75,20 +75,35 @@ public class Niveau extends JPanel{
     this.addNewObject(this.avion);
     barre2.setPositionX(-500 + (int)(Math.random() * ((150 + 350) + 1)));
 
-    int b,i,k;
-    int j,y;
+
+    Interval interavionX = new Interval(avion.getPositionX(),avion.getPositionX()+100);
+    Interval interavionY = new Interval(avion.getPositionY(),avion.getPositionY()+100);
+    Interval interbarre1X = new Interval(barre.getPositionX(),barre.getPositionX()+600);
+    Interval interbarre2X = new Interval(barre2.getPositionX(),barre2.getPositionX()+600);
+    Interval interbarre1Y = new Interval(barre.getPositionY(),barre.getPositionY()+600);
+    Interval interbarre2Y = new Interval(barre2.getPositionY(),barre2.getPositionY()+600);
+    Interval hitbox1X = new Interval(avion.getPositionX(),avion.getPositionX()+23);
+    Interval hitbox1Y = new Interval(avion.getPositionY()+47,avion.getPositionY()+75);
+    Interval hitbox2X = new Interval(avion.getPositionX(),avion.getPositionX()+28);
+    Interval hitbox2Y = new Interval(avion.getPositionY(),avion.getPositionY()+25);
+    Interval hitbox3X = new Interval(avion.getPositionX()+66,avion.getPositionX()+100);
+    Interval hitbox3Y = new Interval(avion.getPositionY(),avion.getPositionY()+26);
 
 
     while(true){
       long temps_debut_boucle = System.currentTimeMillis();
 
       if(this.getEntreeUtilisateur() == 2){
-        this.avion.setPositionX(this.avion.getPositionX()-5);
-        this.avion.setImageAvionActuel("gauche");
+        if(this.avion.getPositionX() > 0){
+          this.avion.setPositionX(this.avion.getPositionX()-5);
+          this.avion.setImageAvionActuel("gauche");
+        }
       }
       else if(this.getEntreeUtilisateur() == 1){
-        this.avion.setPositionX(this.avion.getPositionX()+5);
-        this.avion.setImageAvionActuel("droite");
+        if(this.avion.getPositionX()+100 < 505){
+          this.avion.setPositionX(this.avion.getPositionX()+5);
+          this.avion.setImageAvionActuel("droite");
+        }
       }
       else if(this.getEntreeUtilisateur() == 0){
         this.avion.setImageAvionActuel("bas");
@@ -105,29 +120,33 @@ public class Niveau extends JPanel{
         barre2.setPositionX(-500 + (int)(Math.random() * ((500 + 150 - 250) + 1)));
       }
 
-      if((avion.getPositionX()+100>=barre.getPositionX())) {
-        if((avion.getPositionY()+75)>=barre.getPositionY()) {
-          if(!(((avion.getPositionX()+26<=barre.getPositionX())&&(avion.getPositionX()+84<=barre.getPositionX()+600)&&(avion.getPositionY()+68>=barre.getPositionY())&&(avion.getPositionY()+73<=barre.getPositionY()+80))
-          ||((avion.getPositionX()<=barre.getPositionX())&&(avion.getPositionX()+23<=barre.getPositionX()+600)&&(avion.getPositionY()+47>=barre.getPositionY())&&(avion.getPositionY()+75<=barre.getPositionY()+80))
-          ||((avion.getPositionX()<=barre.getPositionX())&&(avion.getPositionX()+28<=barre.getPositionX()+600)&&(avion.getPositionY()>=barre.getPositionY())&&(avion.getPositionY()+25<=barre.getPositionY()+80))
-          ||((avion.getPositionX()+66<=barre.getPositionX())&&(avion.getPositionX()+100<=barre.getPositionX()+600)&&(avion.getPositionY()>=barre.getPositionY())&&(avion.getPositionY()+26<=barre.getPositionY()+80)))) {
-            System.out.println("perdu");
-          }
+      interavionX.setValues(avion.getPositionX(),avion.getPositionX()+100);
+      interavionY.setValues(avion.getPositionY(),avion.getPositionY()+75);
+      interbarre1X.setValues(barre.getPositionX(),barre.getPositionX()+600);
+      interbarre1Y.setValues(barre.getPositionY(),barre.getPositionY()+75);
+      interbarre2X.setValues(barre2.getPositionX(),barre2.getPositionX()+600);
+      interbarre2Y.setValues(barre2.getPositionY(),barre2.getPositionY()+75);
+      hitbox1X.setValues(avion.getPositionX(),avion.getPositionX()+23);
+      hitbox1Y.setValues(avion.getPositionY()+47,avion.getPositionY()+75);
+      hitbox2X.setValues(avion.getPositionX(),avion.getPositionX()+28);
+      hitbox2Y.setValues(avion.getPositionY(),avion.getPositionY()+25);
+      hitbox3X.setValues(avion.getPositionX()+66,avion.getPositionX()+100);
+      hitbox3Y.setValues(avion.getPositionY(),avion.getPositionY()+26);
+      
+      if((interavionX.intersects(interbarre1X)==true)&&(interavionY.intersects(interbarre1Y)==true)) {
+        if(!(((hitbox1X.contains(barre.getPositionX()+600)==true)&&(hitbox1Y.contains(barre.getPositionY())==true))
+          ||((hitbox2X.contains(barre.getPositionX()+600)==true)&&(hitbox3Y.contains(barre.getPositionY())==true))
+          ||((hitbox3X.contains(barre.getPositionX())==true)&&(hitbox3Y.contains(barre.getPositionY())==true)))) {
+        System.out.println("perdu");
         }
       }
-      if((avion.getPositionX()+100>=barre2.getPositionX())) {
-        if((avion.getPositionY()+75)>=barre2.getPositionY()) {
-          if(!(((avion.getPositionX()+26<=barre2.getPositionX())&&(avion.getPositionX()+84<=barre2.getPositionX()+600)&&(avion.getPositionY()+68>=barre2.getPositionY())&&(avion.getPositionY()+73<=barre2.getPositionY()+80))
-          ||((avion.getPositionX()<=barre2.getPositionX())&&(avion.getPositionX()+23<=barre2.getPositionX()+600)&&(avion.getPositionY()+47>=barre2.getPositionY())&&(avion.getPositionY()+75<=barre2.getPositionY()+80))
-          ||((avion.getPositionX()<=barre2.getPositionX())&&(avion.getPositionX()+28<=barre2.getPositionX()+600)&&(avion.getPositionY()>=barre2.getPositionY())&&(avion.getPositionY()+25<=barre2.getPositionY()+80))
-          ||((avion.getPositionX()+66<=barre2.getPositionX())&&(avion.getPositionX()+100<=barre2.getPositionX()+600)&&(avion.getPositionY()>=barre2.getPositionY())&&(avion.getPositionY()+26<=barre2.getPositionY()+80)))) {
-            System.out.println("perdu");
-          }
+      if((interavionX.intersects(interbarre2X)==true)&&(interavionY.intersects(interbarre2Y)==true)) {
+        if(!(((hitbox1X.contains(barre2.getPositionX()+600)==true)&&(hitbox1Y.contains(barre2.getPositionY())==true))
+          ||((hitbox2X.contains(barre2.getPositionX()+600)==true)&&(hitbox3Y.contains(barre2.getPositionY())==true))
+          ||((hitbox3X.contains(barre2.getPositionX())==true)&&(hitbox3Y.contains(barre2.getPositionY())==true)))) {
+        System.out.println("perdu");
         }
-
       }
-
-
 
 
       this.repaint();

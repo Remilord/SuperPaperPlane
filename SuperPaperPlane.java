@@ -12,7 +12,6 @@ public class SuperPaperPlane{
     fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fenetre.setVisible(true);
 		fenetre.add(niveau);
-
 		niveau.run();
 	}
 }
