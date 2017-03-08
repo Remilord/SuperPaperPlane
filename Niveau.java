@@ -16,6 +16,8 @@ import java.awt.event.KeyListener;
 public class Niveau extends JPanel{
   private ArrayList<GameObject> objects = new ArrayList<GameObject>();
 
+  private int score = 0;
+
   private BufferedImage background;
 
   protected Avion avion = new Avion(50,50);
@@ -51,7 +53,7 @@ public class Niveau extends JPanel{
     }
     return img;
   }
-
+  private Font font = new Font("TimesRoman", Font.BOLD, 24);
 
   public void addNewObject(GameObject object){
     this.objects.add(object);
@@ -60,11 +62,15 @@ public class Niveau extends JPanel{
   @Override
   public void paintComponent(Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
+    g2d.setColor(Color.WHITE);
+    g2d.setFont(this.font);
     g2d.drawImage(background, null, 0, 0);
     int size = objects.size();
     for(int i = 0; i < size; i++){
       g2d.drawImage(objects.get(i).getImage(), null, objects.get(i).getPositionX(), objects.get(i).getPositionY());
     }
+
+    g2d.drawString(Integer.toString(this.score/60), 250, 750);
   }
   public void run(){
     Barre barre = new Barre(0, 0);
@@ -72,7 +78,7 @@ public class Niveau extends JPanel{
     this.addNewObject(barre);
     this.addNewObject(barre2);
     this.addNewObject(this.avion);
-    barre2.setPositionX(-500 + (int)(Math.random() * ((150 + 350) + 1)));
+    barre2.setPositionX(-500 + (int)(Math.random() * ((150) + 1)));
 
 
     Interval interavionX = new Interval(avion.getPositionX(),avion.getPositionX()+100);
@@ -85,6 +91,7 @@ public class Niveau extends JPanel{
 
 
     while(true){
+      this.score++;
       long temps_debut_boucle = System.currentTimeMillis();
 
       if(this.getEntreeUtilisateur() == 2){
@@ -111,12 +118,14 @@ public class Niveau extends JPanel{
       }
       if(barre2.getPositionY()<=0-80){
         barre2.setPositionY(800);
-        barre2.setPositionX(-500 + (int)(Math.random() * ((500 + 150 - 250) + 1)));
+        barre2.setPositionX(-500 + (int)(Math.random() * ((150) + 1)));
       }
+      this.repaint();
+
       interavionX.setValues(avion.getPositionX(),avion.getPositionX()+100);
       interavionY.setValues(avion.getPositionY(),avion.getPositionY()+75);
       interbarre1X.setValues(barre.getPositionX(),barre.getPositionX()+600);
-      interbarre1Y.setValues(barre.getPositionY(),barre.getPositionY()+75);			/*A modifier (faire un intervalle � deux dimensions X Y)*/
+      interbarre1Y.setValues(barre.getPositionY(),barre.getPositionY()+75);			/*A modifier (faire un intervalle � deux dimensions X Y)*/
       interbarre2X.setValues(barre2.getPositionX(),barre2.getPositionX()+600);
       interbarre2Y.setValues(barre2.getPositionY(),barre2.getPositionY()+75);
 
@@ -129,8 +138,15 @@ public class Niveau extends JPanel{
     	 hitbox.setEtat(0,avion);
      }
        if(hitbox.intersects(barre.getPositionX(),barre.getPositionY(),600,80)) {
-        System.out.println("toast");
-       }
+         try{
+           Thread.sleep(5000); // 1000/60 = 16ms environ,.16..66666 arronti à 17. On y soustrait le temps consommé pour update et dessiner la frame
+           System.exit(0);
+         }
+         catch(InterruptedException e){
+           System.err.println("Interruped while sleeping between two frames");
+           System.exit(1);
+         }
+        }
       }
       if((interavionX.intersects(interbarre2X)==true)&&(interavionY.intersects(interbarre2Y)==true)) {
     	  if(this.getEntreeUtilisateur() == 2) {
@@ -141,12 +157,18 @@ public class Niveau extends JPanel{
     	    	 hitbox.setEtat(0,avion);
     	     }
        if(hitbox.intersects(barre2.getPositionX(),barre2.getPositionY(),600,100)) {
-        System.out.println("toast");
+         try{
+           Thread.sleep(5000); // 1000/60 = 16ms environ,.16..66666 arronti à 17. On y soustrait le temps consommé pour update et dessiner la frame
+           System.exit(0);
+         }
+         catch(InterruptedException e){
+           System.err.println("Interruped while sleeping between two frames");
+           System.exit(1);
+         }
        }
       }
       hitbox.reset();
 
-      this.repaint();
       long temps_consomme = System.currentTimeMillis() - temps_debut_boucle;
       try{
         Thread.sleep((int)(16.6666-temps_consomme)); // 1000/60 = 16ms environ,.16..66666 arronti à 17. On y soustrait le temps consommé pour update et dessiner la frame
