@@ -11,9 +11,9 @@ public class Barre extends GameObject {
 		super(0, 0);
 		barre = Niveau.loadBufferedImage(".."+File.separator+"image"+File.separator+"Barre.png");
 		this.positionX = 280 + (int)(Math.random() * ((400 - 280) + 1));
-		this.positionY = (int) Math.floor(Math.random() * 340)+220;
-		this.largeur = getPositionX()+600;
-		this.hauteur = getPositionY()+80;
+		this.positionY = 600;
+		this.largeur = 600;
+		this.hauteur = 80;
 	}
 
 	@Override

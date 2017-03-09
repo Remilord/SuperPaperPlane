@@ -14,8 +14,9 @@ import java.awt.event.KeyListener;
 
 
 public class Niveau extends JPanel{
-
   private ArrayList<GameObject> objects = new ArrayList<GameObject>();
+
+  private int score = 0;
 
   private BufferedImage background;
 
@@ -52,7 +53,7 @@ public class Niveau extends JPanel{
     }
     return img;
   }
-
+  private Font font = new Font("TimesRoman", Font.BOLD, 24);
 
   public void addNewObject(GameObject object){
     this.objects.add(object);
@@ -61,38 +62,33 @@ public class Niveau extends JPanel{
   @Override
   public void paintComponent(Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
+    g2d.setColor(Color.WHITE);
+    g2d.setFont(this.font);
     g2d.drawImage(background, null, 0, 0);
     int size = objects.size();
     for(int i = 0; i < size; i++){
       g2d.drawImage(objects.get(i).getImage(), null, objects.get(i).getPositionX(), objects.get(i).getPositionY());
     }
+
+    g2d.drawString(Integer.toString(this.score/60), 250, 750);
   }
   public void run(){
+    int vitesse = 9;
+    Pattern pattern = new Pattern();
+
     Barre barre = new Barre(0, 0);
     Barre barre2 = new Barre(0, 0);
     this.addNewObject(barre);
     this.addNewObject(barre2);
     this.addNewObject(this.avion);
-    barre2.setPositionX(-500 + (int)(Math.random() * ((150 + 350) + 1)));
-
-
-    Interval interavionX = new Interval(avion.getPositionX(),avion.getPositionX()+100);
-    Interval interavionY = new Interval(avion.getPositionY(),avion.getPositionY()+100);
-    Interval interbarre1X = new Interval(barre.getPositionX(),barre.getPositionX()+600);
-    Interval interbarre2X = new Interval(barre2.getPositionX(),barre2.getPositionX()+600);
-    Interval interbarre1Y = new Interval(barre.getPositionY(),barre.getPositionY()+600);
-    Interval interbarre2Y = new Interval(barre2.getPositionY(),barre2.getPositionY()+600);
-    Interval hitbox1X = new Interval(avion.getPositionX(),avion.getPositionX()+23);
-    Interval hitbox1Y = new Interval(avion.getPositionY()+47,avion.getPositionY()+75);
-    Interval hitbox2X = new Interval(avion.getPositionX(),avion.getPositionX()+28);
-    Interval hitbox2Y = new Interval(avion.getPositionY(),avion.getPositionY()+25);
-    Interval hitbox3X = new Interval(avion.getPositionX()+66,avion.getPositionX()+100);
-    Interval hitbox3Y = new Interval(avion.getPositionY(),avion.getPositionY()+26);
-
+    barre2.setPositionX(-500 + (int)(Math.random() * ((150) + 1)));
+    Hitbox hitbox = new Hitbox();
 
     while(true){
-      long temps_debut_boucle = System.currentTimeMillis();
+      this.score++;
 
+      long temps_debut_boucle = System.currentTimeMillis();
+      /* DEPLACMEMENT AVION */
       if(this.getEntreeUtilisateur() == 2){
         if(this.avion.getPositionX() > 0){
           this.avion.setPositionX(this.avion.getPositionX()-5);
@@ -108,48 +104,50 @@ public class Niveau extends JPanel{
       else if(this.getEntreeUtilisateur() == 0){
         this.avion.setImageAvionActuel("bas");
       }
+      /* DEPLACEMENT BARRES */
 
-      barre.setPositionY(barre.getPositionY()-6);
-      barre2.setPositionY(barre2.getPositionY()-6);
-      if(barre.getPositionY()<=0-80){
-        barre.setPositionY(800);
-        barre.setPositionX(280 + (int)(Math.random() * ((400 - 280) + 1)));
-      }
-      if(barre2.getPositionY()<=0-80){
-        barre2.setPositionY(800);
-        barre2.setPositionX(-500 + (int)(Math.random() * ((500 + 150 - 250) + 1)));
-      }
-
-      interavionX.setValues(avion.getPositionX(),avion.getPositionX()+100);
-      interavionY.setValues(avion.getPositionY(),avion.getPositionY()+75);
-      interbarre1X.setValues(barre.getPositionX(),barre.getPositionX()+600);
-      interbarre1Y.setValues(barre.getPositionY(),barre.getPositionY()+75);
-      interbarre2X.setValues(barre2.getPositionX(),barre2.getPositionX()+600);
-      interbarre2Y.setValues(barre2.getPositionY(),barre2.getPositionY()+75);
-      hitbox1X.setValues(avion.getPositionX(),avion.getPositionX()+23);
-      hitbox1Y.setValues(avion.getPositionY()+47,avion.getPositionY()+75);
-      hitbox2X.setValues(avion.getPositionX(),avion.getPositionX()+28);
-      hitbox2Y.setValues(avion.getPositionY(),avion.getPositionY()+25);
-      hitbox3X.setValues(avion.getPositionX()+66,avion.getPositionX()+100);
-      hitbox3Y.setValues(avion.getPositionY(),avion.getPositionY()+26);
-      
-      if((interavionX.intersects(interbarre1X)==true)&&(interavionY.intersects(interbarre1Y)==true)) {
-        if(!(((hitbox1X.contains(barre.getPositionX()+600)==true)&&(hitbox1Y.contains(barre.getPositionY())==true))
-          ||((hitbox2X.contains(barre.getPositionX()+600)==true)&&(hitbox3Y.contains(barre.getPositionY())==true))
-          ||((hitbox3X.contains(barre.getPositionX())==true)&&(hitbox3Y.contains(barre.getPositionY())==true)))) {
-        System.out.println("perdu");
+      for(int i = 0; i < this.objects.size(); i++){
+        if(this.objects.get(i) instanceof Barre){
+          this.objects.get(i).setPositionY(barre.getPositionY() - vitesse);
         }
       }
-      if((interavionX.intersects(interbarre2X)==true)&&(interavionY.intersects(interbarre2Y)==true)) {
-        if(!(((hitbox1X.contains(barre2.getPositionX()+600)==true)&&(hitbox1Y.contains(barre2.getPositionY())==true))
-          ||((hitbox2X.contains(barre2.getPositionX()+600)==true)&&(hitbox3Y.contains(barre2.getPositionY())==true))
-          ||((hitbox3X.contains(barre2.getPositionX())==true)&&(hitbox3Y.contains(barre2.getPositionY())==true)))) {
-        System.out.println("perdu");
+      boolean generated = false;
+      for(int i = 0; i < this.objects.size(); i++){
+        if(this.objects.get(i) instanceof Barre){
+          if(this.objects.get(i).getPositionY() <= 0-80){
+            if(generated == false){
+              pattern.generatePattern();
+              generated = true;
+            }
+            this.objects.get(i).setPositionY(800);
+            if(i%2 == 0)
+              this.objects.get(i).setPositionX(pattern.getPatternX1());
+            else
+              this.objects.get(i).setPositionX(pattern.getPatternX2());
+            }
         }
       }
-
-
       this.repaint();
+      /* CALCUL HITBOX */
+        if(this.getEntreeUtilisateur() == 2) {
+       hitbox.setEtat(2,avion);
+     } else if (this.getEntreeUtilisateur()==1) {
+    	 hitbox.setEtat(1,avion);
+     } else if(this.getEntreeUtilisateur() == 0) {
+    	 hitbox.setEtat(0,avion);
+     }
+       if(hitbox.detectCollision(objects)/*hitbox.intersects(barre.getPositionX(),barre.getPositionY(),600,80)*/) {
+         try{
+           Thread.sleep(5000); // 1000/60 = 16ms environ,.16..66666 arronti à 17. On y soustrait le temps consommé pour update et dessiner la frame
+           System.exit(0);
+         }
+         catch(InterruptedException e){
+           System.err.println("Interruped while sleeping between two frames");
+           System.exit(1);
+         }
+        }
+      hitbox.reset();
+
       long temps_consomme = System.currentTimeMillis() - temps_debut_boucle;
       try{
         Thread.sleep((int)(16.6666-temps_consomme)); // 1000/60 = 16ms environ,.16..66666 arronti à 17. On y soustrait le temps consommé pour update et dessiner la frame

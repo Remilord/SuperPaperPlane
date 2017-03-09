@@ -1,37 +1,9 @@
-/******************************************************************************
- *  Compilation:  javac Interval.java
- *  Execution:    java Interval
- *  Dependencies: StdOut.java
- *  
- *  1-dimensional interval data type.
- *
- ******************************************************************************/
 
-/**
- *  The {@code Interval} class represents a one-dimensional interval.
- *  The interval is <em>closed</em>—it contains both endpoints.
- *  Intervals are immutable: their values cannot be changed after they are created.
- *  The class {@code Interval} includes methods for checking whether
- *  an interval contains a point and determining whether two intervals intersect.
- *
- *  @author Robert Sedgewick
- *  @author Kevin Wayne
- */
 public class Interval {
     private  int min;
     private  int max;
 
-    /**
-     * Initializes a closed interval [min, max].
-     *
-     * @param  min the smaller endpoint
-     * @param  max the larger endpoint
-     * @throws IllegalArgumentException if the min endpoint is greater than the max endpoint
-     * @throws IllegalArgumentException if either {@code min} or {@code max}
-     *         is {@code Double.NaN}, {@code Double.POSITIVE_INFINITY} or
-     *         {@code Double.NEGATIVE_INFINITY}
 
-     */
     public Interval(int min, int max) {
         if (Double.isInfinite(min) || Double.isInfinite(max))
             throw new IllegalArgumentException("Endpoints must be finite");

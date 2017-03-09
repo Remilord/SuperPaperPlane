@@ -17,6 +17,12 @@ abstract class GameObject extends JComponent{
   }
   public void paintComponent(Graphics pinceau){
   }
+  public int getLargeur(){
+    return this.largeur;
+  }
+  public int getHauteur(){
+    return this.hauteur;
+  }
   public int getPositionX(){
     return this.positionX;
   }
