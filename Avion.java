@@ -18,16 +18,8 @@ public class Avion extends GameObject{
     avionBas = Niveau.loadBufferedImage(".."+File.separator+"image"+File.separator+"PionPlaneBas.png");
     crash = Niveau.loadBufferedImage(".."+File.separator+"image"+File.separator+"Crash.png");
     avionImage = Niveau.loadBufferedImage(".."+File.separator+"image"+File.separator+"PionPlane.png");
-    this.largeur = getPositionX()+100;
+    this.largeur =100;
     this.hauteur = 75;
-  }
-
-
-  public int getLargeur(){
-    return this.largeur;
-  }
-  public int getHauteur(){
-    return this.hauteur;
   }
   public void setImageAvionActuel(String str){
     if(str == "droite")
