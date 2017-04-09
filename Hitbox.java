@@ -30,7 +30,7 @@ public class Hitbox extends Polygon {
 		       this.addPoint(a.getPositionX()+97,a.getPositionY()+47);
 		       this.addPoint(a.getPositionX()+3,a.getPositionY()+72);
 		}
-		
+
 		} else if(mini) {
 			if(pos==0) { /*Position vers le bas */
 			       this.addPoint(a.getPositionX()+14,a.getPositionY()+3);
@@ -50,6 +50,7 @@ public class Hitbox extends Polygon {
 		}
 	}
 	public int detectCollision(ArrayList<GameObject> obj) {
+		
 		int i=0;
 		for(i=0;i<obj.size();i++) {
 			if(this.intersects(obj.get(i).getPositionX(),obj.get(i).getPositionY(),obj.get(i).getLargeur(),obj.get(i).getHauteur())) {

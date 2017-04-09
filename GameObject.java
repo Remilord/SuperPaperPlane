@@ -43,4 +43,8 @@ abstract class GameObject extends JComponent{
   public BufferedImage getImage() {
     return null;
   }
+
+  public void deplacement(int vitesse){
+    
+  }
 }

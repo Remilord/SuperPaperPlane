@@ -86,4 +86,9 @@ public class Bonus extends GameObject {
 	public int getEtatNum() {
 		return this.etatnum;
 	}
+
+	@Override
+	public void deplacement(int vitesse){
+			this.setPositionY(this.getPositionY()-vitesse);
+	}
 }

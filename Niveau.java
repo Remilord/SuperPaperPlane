@@ -14,11 +14,11 @@ import java.awt.event.KeyListener;
 
 public class Niveau extends JPanel{
   private ArrayList<GameObject> objects = new ArrayList<GameObject>();
-  private int score = 0;
-  private int vitesse=6;
-  private int bonuseffect=0;
-  private int temps = 0;
-
+  private int score;
+  private int vitesse;
+  private int bonuseffect;
+  private int temps;
+  private boolean insane;
   private BufferedImage background;
 
   protected Avion avion = new Avion(50,50);
@@ -42,6 +42,7 @@ public class Niveau extends JPanel{
     background = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"Niveau.png");
     setFocusable(true);
     addKeyListener(new Clavier(this));
+    this.vitesse = 6;
 
   }
 
@@ -93,7 +94,7 @@ public class Niveau extends JPanel{
     Hitbox hitbox = new Hitbox();
 
 
-    while(!(defaite)){
+    while(!defaite){
       this.score=this.score+this.vitesse/6;
       long temps_debut_boucle = System.currentTimeMillis();
       if(bonusk.sousEffet(this.bonuseffect)) {

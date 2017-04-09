@@ -14,4 +14,9 @@ public class Ah extends GameObject {
 			public BufferedImage getImage() {
 				return this.ah;
 			}
+
+			@Override
+			public void deplacement(int vitesse){
+					this.setPositionY(this.getPositionY()-vitesse*3);
+			}
 }

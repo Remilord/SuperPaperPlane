@@ -19,20 +19,16 @@ public class NiveauInsane extends JPanel{
   private int vitesse=6;
   private int bonuseffect=0;
   private int temps = 0;
-
   private ClavierInsane ci;
-
-  private BufferedImage background;
-  private BufferedImage backgroundf;
-  private BufferedImage backgroundss;
-  private BufferedImage backgroundb;
-
+  private BufferedImage background; //Base
+  private BufferedImage backgroundBlur; //flou
+  private BufferedImage backgroundShootingStar; //Shooting Star
+  private BufferedImage backgroundBase; //Base
   private boolean defaite;
   protected Avion avion = new Avion(50,50);
-
   protected int entree_utilisateur = 0;
-
-
+  private boolean insane;
+  private JFrame jf;
   public int getEntreeUtilisateur(){
     return this.entree_utilisateur;
   }
@@ -41,16 +37,32 @@ public class NiveauInsane extends JPanel{
     this.entree_utilisateur = x;
   }
 
-  public NiveauInsane() {
+  public NiveauInsane(boolean insane, JFrame jf) {
     super(true);
-    background = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"Niveau.png");
-    backgroundf = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"Niveauflou.png");
-    backgroundss = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"NiveauInsaneShootingStar.png");
-    backgroundb = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"Niveau.png");
+    this.jf = jf;
+    this.insane = insane;
+    this.defaite = false;
+    background = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"Niveau.png");
+    backgroundBlur = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"Niveauflou.png");
+    backgroundShootingStar = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"NiveauInsaneShootingStar.png");
+    backgroundBase = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"Niveau.png");
     setFocusable(true);
     ci = new ClavierInsane(this);
     addKeyListener(ci);
 
+  }
+
+  public static BufferedImage loadBufferedImage(String path) {
+    BufferedImage img = null;
+    try {
+      img = ImageIO.read(new File(path));
+      return img;
+    }
+    catch (IOException e) {
+      System.err.println("LOADING ERROR "+path);
+      System.exit(1);
+    }
+    return img;
   }
 
   private Font font = new Font("TimesRoman", Font.BOLD, 24);
@@ -60,16 +72,16 @@ public class NiveauInsane extends JPanel{
   }
   public void setFlou(boolean on) {
     if(on) {
-      this.background=this.backgroundf;
+      this.background=this.backgroundBlur;
     }else {
-      this.background = this.backgroundb;
+      this.background = this.backgroundBase;
     }
   }
-  private void setBackgroundSS(boolean onss) {
+  private void setBackgroundShootingStar(boolean onss) {
     if(onss) {
-      this.background=this.backgroundss;
+      this.background=this.backgroundShootingStar;
     }else {
-      this.background=this.backgroundb;
+      this.background=this.backgroundBase;
     }
   }
   public int getScore() {
@@ -78,6 +90,8 @@ public class NiveauInsane extends JPanel{
 
   @Override
   public void paintComponent(Graphics g) {
+
+    super.paintComponent(g);
     Graphics2D g2d = (Graphics2D) g;
     g2d.setColor(Color.WHITE);
     g2d.setFont(this.font);
@@ -89,7 +103,11 @@ public class NiveauInsane extends JPanel{
 
     g2d.drawString(Integer.toString(this.score/60), 250, 750);
   }
+
+
+
   public void run(){
+
     int n=1,nd=0,nj=0,np=0; //Numero dimage pour les animations de mario , de denis , de jagger et de portail
     int tm=0,tss=0,tj=0,td=0,tp=0; //Timer pour Mario , shooting star , l'effet du jagger , denis brogniart et pour les portails
     int vj=0;
@@ -98,7 +116,7 @@ public class NiveauInsane extends JPanel{
     int nbouteille=0;
     int nbrtir=0;
     int posmin = 0;
-    boolean wss = false; //Booleen pour shooting star , true pour actif , false pour inactif
+    boolean shootingStar = false; //Booleen pour shooting star , true pour actif , false pour inactif
     boolean wrd = false; // Booleen pour la ronde de denis gauche vers droite pour false  puis droite vers gauche pour true
     boolean mini=false;
     Random rss = new Random(); //Random pour le shooting star
@@ -130,21 +148,22 @@ public class NiveauInsane extends JPanel{
     Rectangle denish = new Rectangle(); //Hitbox de denis
 
 
-    while(!(defaite)){
+    while(!defaite){
+
       this.score=this.score+this.vitesse/6;
       long temps_debut_boucle = System.currentTimeMillis();
       if(bonusk.sousEffet(this.bonuseffect)) {
         this.temps++;
       }
-
+      if(insane){
       if(this.score%600==0) {
         this.addNewObject(mario);
         mario.setImageMarioActuel(1);
       }
 
-      if((rss.nextInt(3500)==0)&&(wss==false)) {
-        this.setBackgroundSS(true);
-        wss=true;
+      if((rss.nextInt(3500)==0)&&(shootingStar==false)) {
+        this.setBackgroundShootingStar(true);
+        shootingStar=true;
         barre.setImageSS(true);
         barre2.setImageSS(true);
         this.objects.remove(fg);
@@ -161,15 +180,15 @@ public class NiveauInsane extends JPanel{
         pone.setPositions(1);
         ptwo.setPositions(2);
       }
-      if(wss) {
+      if(shootingStar) {
         tss++;
       }
       if(nbouteille > 0) {
         tj++;
       }
       if(tss==2000) {
-        wss=false;
-        this.setBackgroundSS(false);
+        shootingStar=false;
+        this.setBackgroundShootingStar(false);
         barre.setImageSS(false);
         barre2.setImageSS(false);
         this.addNewObject(fg);
@@ -246,6 +265,8 @@ public class NiveauInsane extends JPanel{
           np=0;
         }
       }
+    }
+
 
       if(this.getEntreeUtilisateur() == 2){
         if(this.avion.getPositionX() > posmin){
@@ -269,20 +290,20 @@ public class NiveauInsane extends JPanel{
       }
 
 
-      if(wss) {
+      if(shootingStar && insane) {
         if(this.avion.getPositionX() > 505) {
           this.avion.setPositionX(-50);
         }else if (this.avion.getPositionX() < -75) {
           this.avion.setPositionX(490);
         }
       }
+      //---------------------DEPLACEMENT--------------------------
+      deplacement(this.objects);
 
 
-      barre.setPositionY(barre.getPositionY()-vitesse);
-      barre2.setPositionY(barre2.getPositionY()-vitesse);
-      bonusk.setPositionY(bonusk.getPositionY()-vitesse);
-      jg.setPositionY(jg.getPositionY()-(vitesse+5));
-      jg.setPositionX(jg.getPositionX()-3);
+      if(insane){
+
+
       if(denis.getPositionX()>= 405) {
         wrd=true;
       }else if(denis.getPositionX() <= 0 ){
@@ -327,6 +348,9 @@ public class NiveauInsane extends JPanel{
           this.objects.remove(denis);
         }
       }
+    }
+
+
       if(barre.getPositionY()<=0-80){
         barre.setPositionY(800);
         barre.setPositionX(280 + (int)(Math.random() * ((400 - 280) + 1)));
@@ -341,7 +365,6 @@ public class NiveauInsane extends JPanel{
       if((jg.getPositionX()<=0-80)||(jg.getPositionY()<=0-80)) {
         jg.resetPosition();
       }
-      this.repaint();
       if(this.getEntreeUtilisateur() == 2) {
         hitbox.setEtat(2,avion,mini);
       } else if (this.getEntreeUtilisateur()==1) {
@@ -358,8 +381,7 @@ public class NiveauInsane extends JPanel{
             ss.stop();
           }
           catch(InterruptedException e){
-            System.err.println("Interruped while sleeping between two frames");
-            System.exit(1);
+            System.err.println("Erreur hitbox");
           }
         }
       }
@@ -380,7 +402,7 @@ public class NiveauInsane extends JPanel{
 
       if(hitbox.detectCollision(objects)==3) {
         if(nbouteille==0) {
-          if(wss==false) {
+          if(shootingStar==false) {
             this.setFlou(true);
             barre.setFlou(true);
             barre2.setFlou(true);
@@ -421,6 +443,9 @@ public class NiveauInsane extends JPanel{
 
 
       hitbox.reset();
+
+      this.repaint();
+
       long temps_consomme = System.currentTimeMillis() - temps_debut_boucle;
       if(temps_consomme<16.6666) {
         try{
@@ -430,6 +455,16 @@ public class NiveauInsane extends JPanel{
           System.err.println("Interruped while sleeping between two frames");
         }
       }
+    }
+
+
+
+
+  }
+
+  private void deplacement(ArrayList<GameObject> objects){
+    for(int i = 0; i < objects.size(); i++){
+        objects.get(i).deplacement(this.vitesse);
     }
   }
 }

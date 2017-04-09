@@ -5,6 +5,7 @@ public class SourisMenu implements MouseListener {
 	private Menu mt;
 	private int activniv;
 	private JFrame fenetre;
+	private int num;
 	public SourisMenu(JFrame jfr,Menu me) {
 		this.mt = me;
 		this.fenetre=jfr;
@@ -31,23 +32,20 @@ public class SourisMenu implements MouseListener {
 		}
 		else if(((me.getY()>265)&&(me.getY()<440))&&(this.mt.getMenuNum()==2)) {
 			this.mt.SetMenu(0);
-			ThreadGame tg = new ThreadGame(this.fenetre,1,this.mt);
-			tg.start();
+			run(1, this.mt);
 			this.activniv=1;
 		}
 		else if(((me.getY()>550)&&(me.getY()<690))&&(this.mt.getMenuNum()==2)) {
 			this.mt.SetMenu(0);
-			ThreadGame tg = new ThreadGame(this.fenetre,2,this.mt);
-			tg.start();
+			run(2, this.mt);
 			this.activniv=2;
-	}else if(((me.getY()>435)&&(me.getY()<555))&&(this.mt.getMenuNum()==4)) {
+		}else if(((me.getY()>435)&&(me.getY()<555))&&(this.mt.getMenuNum()==4)) {
 			this.mt.SetMenu(0);
-			ThreadGame tg = new ThreadGame(this.fenetre,this.activniv,this.mt);
-			tg.start();
-	}
-	else if(((me.getY()>635)&&(me.getY()<755))&&(this.mt.getMenuNum()==4)) {
-		this.fenetre.dispose();
-}
+			run(4, this.mt);
+		}
+		else if(((me.getY()>635)&&(me.getY()<755))&&(this.mt.getMenuNum()==4)) {
+			this.fenetre.dispose();
+		}
 	}
 
 	@Override
@@ -57,7 +55,7 @@ public class SourisMenu implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent me) {
-	//Inutile
+		//Inutile
 	}
 
 	@Override
@@ -68,6 +66,38 @@ public class SourisMenu implements MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent me) {
 		//Inutile
+	}
+
+	public void run(int num, Menu fin) {
+
+		fenetre.removeAll();
+		fenetre.setFocusable(false);
+		if(num==1) {
+			NiveauInsane niv = new NiveauInsane(false, fenetre);
+			fenetre.getContentPane().add(niv);
+			fenetre.revalidate();
+			niv.requestFocusInWindow();
+			niv.run();
+			fin.setScoreDeFin(niv.getScore());
+		}else if(num==2) {
+			NiveauInsane nivinsane = new NiveauInsane(true, fenetre);
+			fenetre.setContentPane(nivinsane);
+
+			nivinsane.requestFocusInWindow();
+			nivinsane.revalidate();
+			fenetre.revalidate();
+			nivinsane.run();
+
+			fin.setScoreDeFin(nivinsane.getScore());
+
+
+		}
+			fin.SetMenu(4);
+			fin.setNumNiv(this.num);
+			fenetre.getContentPane().removeAll();
+			fenetre.setContentPane(fin);
+			fenetre.revalidate();
+			fenetre.repaint();
 	}
 
 }

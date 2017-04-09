@@ -58,4 +58,11 @@ public class Jagger extends GameObject {
 		public BufferedImage getImage() {
 		    return jagger;
 		  }
+
+
+			@Override
+			public void deplacement(int vitesse){
+				setPositionY(getPositionY()-(vitesse+5));
+				setPositionX(getPositionX()-3);
+			}
 }

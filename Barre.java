@@ -38,4 +38,9 @@ public class Barre extends GameObject {
   public BufferedImage getImage() {
     return barre;
   }
+
+	@Override
+	public void deplacement(int vitesse){
+			this.setPositionY(this.getPositionY()-vitesse);
+	}
 }
