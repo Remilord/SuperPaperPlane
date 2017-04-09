@@ -117,7 +117,6 @@ public class NiveauInsane extends JPanel{
     int nbrtir=0;
     int posmin = 0;
     boolean shootingStar = false; //Booleen pour shooting star , true pour actif , false pour inactif
-    boolean wrd = false; // Booleen pour la ronde de denis gauche vers droite pour false  puis droite vers gauche pour true
     boolean mini=false;
     Random rss = new Random(); //Random pour le shooting star
     Random rd = new Random();  //Random pour l'apparition de denis
@@ -171,7 +170,8 @@ public class NiveauInsane extends JPanel{
         posmin=-105;
         ss.play();
       }
-      if((((this.score/60)%40)==0)&&(this.objects.contains(denis)==false)&&((this.score/60)!=0)) {
+      //Si le score est a %40 ajout d'un Dennis
+      if((((this.score/60)%5)==0) && (this.objects.contains(denis)==false)&&((this.score/60)!=0)) {
         this.addNewObject(denis);
       }
       if((rp.nextInt(900)==0)&&(this.objects.contains(pone)==false)) {
@@ -303,19 +303,6 @@ public class NiveauInsane extends JPanel{
 
       if(insane){
 
-
-      if(denis.getPositionX()>= 405) {
-        wrd=true;
-      }else if(denis.getPositionX() <= 0 ){
-        wrd=false;
-      }
-      if(this.objects.contains(denis)) {
-        if(wrd) {
-          denis.setPositionX(denis.getPositionX()-3);
-        } else {
-          denis.setPositionX(denis.getPositionX()+3);
-        }
-      }
       if(this.objects.contains(ah)) {
         ah.setPositionY(ah.getPositionY()-30);
         if(ah.getPositionY() <= -60) {
