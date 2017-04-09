@@ -126,14 +126,13 @@ public class NiveauInsane extends JPanel{
     Bonus bonusk = new Bonus(0,0);
     Mario mario = new Mario(0,0);
     Denis denis = new Denis(0,650);
-    Tir tir = new Tir(0,0);
-    Ah ah = new Ah(0,0);
+    Tir tir = new Tir(0,0, objects);
     Feu fg = new Feu(0,0);
     Feu fd = new Feu(435,0);
-    Portal pone = new Portal(0,0);
-    Portal ptwo = new Portal(0,0);
+    Portal pone = new Portal(0,0, objects);
+    Portal ptwo = new Portal(0,0, objects);
     Son ss = new Son("/res/son/shootingstar.wav");
-    Jagger jg = new Jagger(0,0);
+    Jagger jg = new Jagger(0,0, objects);
     this.addNewObject(barre);
     this.addNewObject(barre2);
     this.addNewObject(bonusk);
@@ -230,7 +229,9 @@ public class NiveauInsane extends JPanel{
         td++;
         if((td==15)||(td==30)||(td==45)||(td==60)) {
           if(nd==1) {
-            this.addNewObject(ah);
+            Ah ah = new Ah(0,0, objects);
+            if(!this.objects.contains(ah))
+              this.addNewObject(ah);
             ah.setPositionX(denis.getPositionX());
             ah.setPositionY(denis.getPositionY());
             Son.playTempSound("/res/son/ah.wav");
@@ -267,7 +268,7 @@ public class NiveauInsane extends JPanel{
       }
     }
 
-
+ //DEP DE L'AVION
       if(this.getEntreeUtilisateur() == 2){
         if(this.avion.getPositionX() > posmin){
           this.avion.setPositionX(this.avion.getPositionX()-5);
@@ -297,37 +298,24 @@ public class NiveauInsane extends JPanel{
           this.avion.setPositionX(490);
         }
       }
+
+// JUSQUE ICI
       //---------------------DEPLACEMENT--------------------------
       deplacement(this.objects);
 
 
       if(insane){
 
-      if(this.objects.contains(ah)) {
-        ah.setPositionY(ah.getPositionY()-30);
-        if(ah.getPositionY() <= -60) {
-          this.objects.remove(ah);
-        }
-      }
-
       if(this.objects.contains(tir)) {
-        tir.setPositionY(tir.getPositionY()+15);
         if((this.objects.contains(denis))&&(this.objects.contains(tir))) {
           tirh.setBounds(tir.getPositionX(), tir.getPositionY(), 15, 30);
           denish.setBounds(denis.getPositionX(), denis.getPositionY(), 100, 100);
         }
-        if((tir.getPositionY() >= 850)||(tirh.intersects(denish))) {
+        if(tirh.intersects(denish)) {
           this.objects.remove(tir);
         }
       }
-      if(this.objects.contains(pone)) {
-        pone.setPositionY(pone.getPositionY()-vitesse);
-        ptwo.setPositionY(ptwo.getPositionY()-vitesse);
-        if(pone.getPositionY() < -100 ) {
-          this.objects.remove(pone);
-          this.objects.remove(ptwo);
-        }
-      }
+
       if(tirh.intersects(denish)) {
         vd --;
         tirh.setBounds(0, 0, 0, 0);
@@ -346,12 +334,7 @@ public class NiveauInsane extends JPanel{
         barre2.setPositionY(800);
         barre2.setPositionX(-500 + (int)(Math.random() * ((150) + 1)));
       }
-      if(bonusk.getPositionY()<=-50) {
-        bonusk.resetBonus();
-      }
-      if((jg.getPositionX()<=0-80)||(jg.getPositionY()<=0-80)) {
-        jg.resetPosition();
-      }
+
       if(this.getEntreeUtilisateur() == 2) {
         hitbox.setEtat(2,avion,mini);
       } else if (this.getEntreeUtilisateur()==1) {
@@ -450,8 +433,7 @@ public class NiveauInsane extends JPanel{
   }
 
   private void deplacement(ArrayList<GameObject> objects){
-    for(int i = 0; i < objects.size(); i++){
-        objects.get(i).deplacement(this.vitesse);
-    }
+    for(GameObject obj : objects)
+        obj.deplacement(this.vitesse);
   }
 }

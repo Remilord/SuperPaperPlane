@@ -5,12 +5,15 @@ import java.awt.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.util.ArrayList;
 public class Jagger extends GameObject {
 	private BufferedImage jagger;
 	private BufferedImage[] animationjagger;
 	private Random rand;
-		public Jagger(int x,int y) {
+	private ArrayList<GameObject> objects;
+		public Jagger(int x,int y, ArrayList<GameObject> objects){
 			super(x,y);
+			this.objects = objects;
 			this.rand=new Random();
 			jagger=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"jagger"+File.separator+"jagger0.png");
 			animationjagger=new BufferedImage[5];
@@ -64,5 +67,8 @@ public class Jagger extends GameObject {
 			public void deplacement(int vitesse){
 				setPositionY(getPositionY()-(vitesse+5));
 				setPositionX(getPositionX()-3);
+				if((getPositionX()<=0-80)||(getPositionY()<=0-80)) {
+	        resetPosition();
+	      }
 			}
 }

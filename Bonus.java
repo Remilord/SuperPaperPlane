@@ -90,5 +90,8 @@ public class Bonus extends GameObject {
 	@Override
 	public void deplacement(int vitesse){
 			this.setPositionY(this.getPositionY()-vitesse);
+			if(getPositionY()<=-50) {
+        resetBonus();
+      }
 	}
 }

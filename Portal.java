@@ -3,13 +3,16 @@ import java.awt.*;
 import java.awt.image.*;
 import java.util.Random;
 import java.io.File;
+import java.util.ArrayList;
 public class Portal extends GameObject {
 	private BufferedImage portal;
 	private BufferedImage[] animationportal;
 	private Random rx;
+	private ArrayList<GameObject> objects;
 	private static int post;
-			public Portal(int x,int y) {
+			public Portal(int x,int y, ArrayList<GameObject> objects) {
 				super(x,y);
+				this.objects = objects;
 				rx=new Random();
 				portal=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"portal"+File.separator+"portal0.png");
 				animationportal=new BufferedImage[7];
@@ -37,5 +40,12 @@ public class Portal extends GameObject {
 			@Override
 			public BufferedImage getImage() {
 				return this.portal;
+			}
+
+			@Override
+			public void deplacement(int vitesse){
+				setPositionY(getPositionY()-vitesse);
+				if(getPositionY() < -100 )
+          objects.remove(this);
 			}
 }
