@@ -11,6 +11,7 @@ abstract class GameObject extends JComponent{
   protected int hauteur;
   protected BufferedImage img;
   public GameObject(int x, int y){
+	  this.setDoubleBuffered(true);
     this.positionY = y;
     this.positionX = x;
 
