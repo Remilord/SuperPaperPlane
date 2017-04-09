@@ -21,8 +21,11 @@ public class Tir extends GameObject {
 			@Override
 			public void deplacement(int vitesse){
 				setPositionY(getPositionY()+15);
-				if(getPositionY() >= 850){
-					objects.remove(this);
-				}
+
+			}
+
+			@Override
+			public boolean remove(){
+				return getPositionY() >= 850;
 			}
 }

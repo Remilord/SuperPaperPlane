@@ -45,6 +45,10 @@ abstract class GameObject extends JComponent{
   }
 
   public void deplacement(int vitesse){
-    
+
+  }
+
+  public boolean remove(){
+    return false;
   }
 }

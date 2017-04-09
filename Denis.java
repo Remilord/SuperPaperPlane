@@ -33,10 +33,10 @@ public class Denis extends GameObject {
 			setPositionX(getPositionX()+3);
 		}
 
-		if(getPositionX()>= 405) {
-			dennisToTheLeft=true;
+		if(getPositionX() >= 405) {
+			dennisToTheLeft = true;
 		}else if(getPositionX() <= 0 ){
-			dennisToTheLeft=false;
+			dennisToTheLeft = false;
 		}
 
 

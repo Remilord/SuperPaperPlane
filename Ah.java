@@ -21,9 +21,15 @@ public class Ah extends GameObject {
 			@Override
 			public void deplacement(int vitesse){
 				setPositionY(getPositionY()-30);
-        if(getPositionY() <= 0) {
+        if(getPositionY() <= -60) {
           this.objects.remove(ah);
         }
+			}
+
+			@Override
+			public boolean remove(){
+				if(getPositionY() <= -60)  return true;
+				return false;
 			}
 
 }

@@ -44,8 +44,11 @@ public class Portal extends GameObject {
 
 			@Override
 			public void deplacement(int vitesse){
-				setPositionY(getPositionY()-vitesse);
-				if(getPositionY() < -100 )
-          objects.remove(this);
+				setPositionY(getPositionY() - vitesse);
+			}
+
+			@Override
+			public boolean remove(){
+				return getPositionY() < - 100;
 			}
 }

@@ -10,7 +10,7 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.KeyListener;
-
+import java.util.Iterator;
 
 
 public class NiveauInsane extends JPanel{
@@ -154,121 +154,121 @@ public class NiveauInsane extends JPanel{
         this.temps++;
       }
       if(insane){
-      if(this.score%600==0) {
-        this.addNewObject(mario);
-        mario.setImageMarioActuel(1);
-      }
-
-      if((rss.nextInt(3500)==0)&&(shootingStar==false)) {
-        this.setBackgroundShootingStar(true);
-        shootingStar=true;
-        barre.setImageSS(true);
-        barre2.setImageSS(true);
-        this.objects.remove(fg);
-        this.objects.remove(fd);
-        posmin=-105;
-        ss.play();
-      }
-      //Si le score est a %40 ajout d'un Dennis
-      if((((this.score/60)%5)==0) && (this.objects.contains(denis)==false)&&((this.score/60)!=0)) {
-        this.addNewObject(denis);
-      }
-      if((rp.nextInt(900)==0)&&(this.objects.contains(pone)==false)) {
-        this.addNewObject(pone);
-        this.addNewObject(ptwo);
-        pone.setPositions(1);
-        ptwo.setPositions(2);
-      }
-      if(shootingStar) {
-        tss++;
-      }
-      if(nbouteille > 0) {
-        tj++;
-      }
-      if(tss==2000) {
-        shootingStar=false;
-        this.setBackgroundShootingStar(false);
-        barre.setImageSS(false);
-        barre2.setImageSS(false);
-        this.addNewObject(fg);
-        this.addNewObject(fd);
-        posmin=0;
-        tss=0;
-        ss.stop();
-      }
-      if(tj==2000) {
-        nbouteille=0;
-        this.setFlou(false);
-        barre.setFlou(false);
-        barre2.setFlou(false);
-        fg.setFlou(false);
-        fd.setFlou(false);
-        this.ci.setInversed(false);
-
-      }
-
-
-
-      if(this.objects.contains(mario)) {
-        tm=tm+1;
-        if(tm==1) {
-          Son.playTempSound("/res/son/Non.wav");
-        }
-        if(tm==200) {
-          n=1;
-          tm=0;
-          objects.remove(mario);
-        }else if((tm==15)||(tm==30)||(tm==45)||(tm==60)) {
-          n=n+1;
-          mario.setImageMarioActuel(n);
+        if(this.score%600==0) {
+          this.addNewObject(mario);
+          mario.setImageMarioActuel(1);
         }
 
-      }
+        if((rss.nextInt(3500)==0)&&(shootingStar==false)) {
+          this.setBackgroundShootingStar(true);
+          shootingStar=true;
+          barre.setImageSS(true);
+          barre2.setImageSS(true);
+          this.objects.remove(fg);
+          this.objects.remove(fd);
+          posmin=-105;
+          ss.play();
+        }
+        //Si le score est a %40 ajout d'un Dennis
+        if((((this.score/60)%5)==0) && (this.objects.contains(denis)==false)&&((this.score/60)!=0)) {
+          this.addNewObject(denis);
+        }
+        if((rp.nextInt(900)==0)&&(this.objects.contains(pone)==false)) {
+          this.addNewObject(pone);
+          this.addNewObject(ptwo);
+          pone.setPositions(1);
+          ptwo.setPositions(2);
+        }
+        if(shootingStar) {
+          tss++;
+        }
+        if(nbouteille > 0) {
+          tj++;
+        }
+        if(tss==2000) {
+          shootingStar=false;
+          this.setBackgroundShootingStar(false);
+          barre.setImageSS(false);
+          barre2.setImageSS(false);
+          this.addNewObject(fg);
+          this.addNewObject(fd);
+          posmin=0;
+          tss=0;
+          ss.stop();
+        }
+        if(tj==2000) {
+          nbouteille=0;
+          this.setFlou(false);
+          barre.setFlou(false);
+          barre2.setFlou(false);
+          fg.setFlou(false);
+          fd.setFlou(false);
+          this.ci.setInversed(false);
 
-      if(this.objects.contains(denis)) {
-        td++;
-        if((td==15)||(td==30)||(td==45)||(td==60)) {
-          if(nd==1) {
-            Ah ah = new Ah(0,0, objects);
-            if(!this.objects.contains(ah))
-              this.addNewObject(ah);
-            ah.setPositionX(denis.getPositionX());
-            ah.setPositionY(denis.getPositionY());
-            Son.playTempSound("/res/son/ah.wav");
+        }
+
+
+
+        if(this.objects.contains(mario)) {
+          tm=tm+1;
+          if(tm==1) {
+            Son.playTempSound("/res/son/Non.wav");
           }
-          nd++;
-          denis.setImageDenisActuel(nd);
-        }
-        if(td==75) {
-          nd=0;
-          td=0;
-          denis.setImageDenisActuel(nd);
-        }
-      }
-      if((vj==5)||(vj==10)||(vj==15)||(vj==20)) {
-        nj=nj+1;
-        jg.setImageJagger(nj);
-      }
-      if(vj==25) {
-        nj=0;
-        vj=0;
-      }
-      vj=vj+1;
-      if(this.objects.contains(pone)) {
-        tp++;
-        if((tp==5)||(tp==10)||(tp==15)||(tp==20)||(tp==25)) {
-          np=np+1;
-          pone.setImagePortalActuel(np);
-          ptwo.setImagePortalActuel(np);
-        }
-        if(tp==30) {
-          tp=0;
-          np=0;
-        }
-      }
-    }
+          if(tm==200) {
+            n=1;
+            tm=0;
+            objects.remove(mario);
+          }else if((tm==15)||(tm==30)||(tm==45)||(tm==60)) {
+            n=n+1;
+            mario.setImageMarioActuel(n);
+          }
 
- //DEP DE L'AVION
+        }
+
+        if(this.objects.contains(denis)) {
+          td++;
+          if((td==15)||(td==30)||(td==45)||(td==60)) {
+            if(nd==1) {
+              Ah ah = new Ah(0,0, objects);
+              if(!this.objects.contains(ah))
+              this.addNewObject(ah);
+              ah.setPositionX(denis.getPositionX());
+              ah.setPositionY(denis.getPositionY());
+              Son.playTempSound("/res/son/ah.wav");
+            }
+            nd++;
+            denis.setImageDenisActuel(nd);
+          }
+          if(td==75) {
+            nd=0;
+            td=0;
+            denis.setImageDenisActuel(nd);
+          }
+        }
+        if((vj==5)||(vj==10)||(vj==15)||(vj==20)) {
+          nj=nj+1;
+          jg.setImageJagger(nj);
+        }
+        if(vj==25) {
+          nj=0;
+          vj=0;
+        }
+        vj=vj+1;
+        if(this.objects.contains(pone)) {
+          tp++;
+          if((tp==5)||(tp==10)||(tp==15)||(tp==20)||(tp==25)) {
+            np=np+1;
+            pone.setImagePortalActuel(np);
+            ptwo.setImagePortalActuel(np);
+          }
+          if(tp==30) {
+            tp=0;
+            np=0;
+          }
+        }
+      }
+
+      //DEP DE L'AVION
       if(this.getEntreeUtilisateur() == 2){
         if(this.avion.getPositionX() > posmin){
           this.avion.setPositionX(this.avion.getPositionX()-5);
@@ -299,31 +299,31 @@ public class NiveauInsane extends JPanel{
         }
       }
 
-// JUSQUE ICI
+
       //---------------------DEPLACEMENT--------------------------
-      deplacement(this.objects);
+      objectUpdate(this.objects);
 
 
       if(insane){
 
-      if(this.objects.contains(tir)) {
-        if((this.objects.contains(denis))&&(this.objects.contains(tir))) {
-          tirh.setBounds(tir.getPositionX(), tir.getPositionY(), 15, 30);
-          denish.setBounds(denis.getPositionX(), denis.getPositionY(), 100, 100);
+        if(this.objects.contains(tir)) {
+          if((this.objects.contains(denis))&&(this.objects.contains(tir))) {
+            tirh.setBounds(tir.getPositionX(), tir.getPositionY(), 15, 30);
+            denish.setBounds(denis.getPositionX(), denis.getPositionY(), 100, 100);
+          }
+          if(tirh.intersects(denish)) {
+            this.objects.remove(tir);
+          }
         }
-        if(tirh.intersects(denish)) {
-          this.objects.remove(tir);
-        }
-      }
 
-      if(tirh.intersects(denish)) {
-        vd --;
-        tirh.setBounds(0, 0, 0, 0);
-        if(vd==0) {
-          this.objects.remove(denis);
+        if(tirh.intersects(denish)) {
+          vd --;
+          tirh.setBounds(0, 0, 0, 0);
+          if(vd==0) {
+            this.objects.remove(denis);
+          }
         }
       }
-    }
 
 
       if(barre.getPositionY()<=0-80){
@@ -426,14 +426,16 @@ public class NiveauInsane extends JPanel{
         }
       }
     }
-
-
-
-
   }
 
-  private void deplacement(ArrayList<GameObject> objects){
-    for(GameObject obj : objects)
-        obj.deplacement(this.vitesse);
+  private void objectUpdate(ArrayList<GameObject> objects){
+    Iterator<GameObject> objIt = objects.iterator();
+    while(objIt.hasNext()) {
+      GameObject obj = objIt.next();
+      obj.deplacement(this.vitesse);
+      if(obj.remove())
+        objIt.remove();
+
+    }
   }
 }
