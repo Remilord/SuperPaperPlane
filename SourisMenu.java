@@ -73,14 +73,14 @@ public class SourisMenu implements MouseListener {
 		fenetre.removeAll();
 		fenetre.setFocusable(false);
 		if(num==1) {
-			NiveauInsane niv = new NiveauInsane(false, fenetre);
+			Niveau niv = new Niveau(false, fenetre);
 			fenetre.getContentPane().add(niv);
 			fenetre.revalidate();
 			niv.requestFocusInWindow();
 			niv.run();
 			fin.setScoreDeFin(niv.getScore());
 		}else if(num==2) {
-			NiveauInsane nivinsane = new NiveauInsane(true, fenetre);
+			Niveau nivinsane = new Niveau(true, fenetre);
 			fenetre.setContentPane(nivinsane);
 
 			nivinsane.requestFocusInWindow();

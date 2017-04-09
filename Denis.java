@@ -7,9 +7,9 @@ public class Denis extends GameObject {
 	private BufferedImage[] animationdenis;
 	private boolean dennisToTheLeft = false; // Booleen pour la ronde de denis gauche vers droite pour false  puis droite vers gauche pour true
 
-	public Denis(int x,int y) {
-		super(x,y);
-		denis=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"denis"+File.separator+"Denis0.png");
+	public Denis(int x,int y, Niveau niveau) {
+		super(x, y, niveau);
+		denis = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"denis"+File.separator+"Denis0.png");
 		animationdenis=new BufferedImage[6];
 		for(int a=0;a<6;a++) {
 			animationdenis[a]=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"denis"+File.separator+"Denis"+a+".png");

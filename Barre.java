@@ -9,8 +9,8 @@ public class Barre extends GameObject {
 	private BufferedImage barreb;
 	private BufferedImage barref;
 	private BufferedImage barress;
-	public Barre(int x,int y) {
-		super(0, 0);
+	public Barre(int x,int y, Niveau niveau) {
+		super(0, 0, niveau);
 		barress = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"barre"+File.separator+"BarreSS.png");
 		barre = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"barre"+File.separator+"Barre.png");
 		barreb = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"barre"+File.separator+"Barre.png");

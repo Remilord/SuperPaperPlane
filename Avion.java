@@ -20,8 +20,8 @@ public class Avion extends GameObject{
   private BufferedImage avionGauchemini;
   private BufferedImage avionDroitemini;
   private BufferedImage avionBasmini;
-  public Avion(int positionX, int positionY){
-    super(positionX, positionY);
+  public Avion(int positionX, int positionY, Niveau niveau){
+    super(positionX, positionY, niveau);
     avionGauche = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"avion"+File.separator+"PionPlaneGauche.png");
     avionDroite = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"avion"+File.separator+"PionPlane.png");
     avionBas = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"avion"+File.separator+"PionPlaneBas.png");
@@ -36,7 +36,7 @@ public class Avion extends GameObject{
     avionGauchemini = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"avion"+File.separator+"PionPlaneGauchemini.png");
     avionDroitemini = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"avion"+File.separator+"PionPlanemini.png");
     avionBasmini = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"avion"+File.separator+"PionPlaneBasmini.png");
-    this.largeur =100;
+    this.largeur = 100;
     this.hauteur = 75;
   }
   public void setImageAvionActuel(String str,int i){

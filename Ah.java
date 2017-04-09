@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class Ah extends GameObject {
 	private BufferedImage ah;
 	private ArrayList<GameObject> objects;
-			public Ah(int x,int y, ArrayList<GameObject> objects) {
-				super(x,y);
+			public Ah(int x,int y, Niveau niveau) {
+				super(x, y, niveau);
 				this.objects = objects;
 				ah=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"denis"+File.separator+"AH.png");
 				this.largeur=40;
@@ -21,10 +21,7 @@ public class Ah extends GameObject {
 			@Override
 			public void deplacement(int vitesse){
 				setPositionY(getPositionY()-30);
-        if(getPositionY() <= -60) {
-          this.objects.remove(ah);
-        }
-			}
+      }
 
 			@Override
 			public boolean remove(){

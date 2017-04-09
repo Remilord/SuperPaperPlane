@@ -14,8 +14,8 @@ public class Bonus extends GameObject {
 	private BufferedImage bonusmini;
 	private int etatnum;
 	private Random rand;
-	public Bonus(int x,int y) {
-		super(0,0);
+	public Bonus(int x,int y, Niveau niveau) {
+		super(0,0, niveau);
 		this.rand=new Random();
 		this.bonusTras = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"bonus"+File.separator+"BonusTras.png");
 		this.bonusSpeed = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"bonus"+File.separator+"BonusSpeed.png");

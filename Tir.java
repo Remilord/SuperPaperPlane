@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class Tir extends GameObject {
 			private BufferedImage tir;
 			private ArrayList<GameObject> objects;
-			public Tir(int x,int y, ArrayList<GameObject> objects) {
-				super(x,y);
+			public Tir(int x,int y, Niveau niveau) {
+				super(x, y, niveau);
 				this.objects = objects;
 				tir=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"denis"+File.separator+"Tir.png");
 				this.largeur=15;

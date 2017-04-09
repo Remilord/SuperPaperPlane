@@ -4,9 +4,9 @@ import java.awt.event.KeyEvent;
 import java.awt.*;
 import java.awt.event.*;
 public class ClavierInsane extends KeyAdapter implements KeyListener{
-  private NiveauInsane niveau;
+  private Niveau niveau;
   private boolean inversed;
-  public ClavierInsane(NiveauInsane n){
+  public ClavierInsane(Niveau n){
     super();
     this.niveau = n;
   }

@@ -9,8 +9,8 @@ public class Feu extends GameObject {
 	private BufferedImage feudroiteb;
 	private BufferedImage feugauchef;
 	private BufferedImage feudroitef;
-	public Feu(int x,int y) {
-		super(x,y);
+	public Feu(int x,int y, Niveau niveau) {
+		super(x,y, niveau);
 		feugaucheb=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"feu"+File.separator+"feugauche.png");
 		feudroiteb=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"feu"+File.separator+"feudroite.png");
 		feugauche=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"feu"+File.separator+"feugauche.png");
@@ -39,5 +39,5 @@ public class Feu extends GameObject {
 	}
 
 
-	
+
 }

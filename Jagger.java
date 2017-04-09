@@ -11,8 +11,8 @@ public class Jagger extends GameObject {
 	private BufferedImage[] animationjagger;
 	private Random rand;
 	private ArrayList<GameObject> objects;
-		public Jagger(int x,int y, ArrayList<GameObject> objects){
-			super(x,y);
+		public Jagger(int x,int y, Niveau niveau){
+			super(x,y, niveau);
 			this.objects = objects;
 			this.rand=new Random();
 			jagger=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"jagger"+File.separator+"jagger0.png");

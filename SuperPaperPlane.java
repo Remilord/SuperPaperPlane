@@ -12,7 +12,7 @@ public class SuperPaperPlane{
 		fenetre.setIconImage(ii.getImage());
 		//Menu md = new Menu();
 		//SourisMenu sm = new SourisMenu(fenetre,md);
-		NiveauInsane niveauInsane = new NiveauInsane(true, fenetre);
+		Niveau niveauInsane = new Niveau(true, fenetre);
 		fenetre.add(niveauInsane);
 		fenetre.setSize(505,800);
     fenetre.setLocation(0, 0);

@@ -10,8 +10,8 @@ public class Portal extends GameObject {
 	private Random rx;
 	private ArrayList<GameObject> objects;
 	private static int post;
-			public Portal(int x,int y, ArrayList<GameObject> objects) {
-				super(x,y);
+			public Portal(int x,int y, Niveau niveau) {
+				super(x,y, niveau);
 				this.objects = objects;
 				rx=new Random();
 				portal=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"portal"+File.separator+"portal0.png");

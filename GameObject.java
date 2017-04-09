@@ -10,8 +10,10 @@ abstract class GameObject extends JComponent{
   protected int largeur;
   protected int hauteur;
   protected BufferedImage img;
-  public GameObject(int x, int y){
+  private final Niveau niveau;
+  public GameObject(int x, int y, Niveau niveau){
 	  this.setDoubleBuffered(true);
+    this.niveau = niveau;
     this.positionY = y;
     this.positionX = x;
 
@@ -51,4 +53,9 @@ abstract class GameObject extends JComponent{
   public boolean remove(){
     return false;
   }
+
+  public Niveau getNiveau(){
+    return niveau;
+  }
+
 }

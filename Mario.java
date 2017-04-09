@@ -11,8 +11,8 @@ import java.io.File;
 public class Mario extends GameObject  {
 	private BufferedImage mario;
 	private BufferedImage[] animationMario;
-	public Mario(int positionX,int positionY) {
-		super(positionX,positionY);
+	public Mario(int positionX,int positionY, Niveau niveau) {
+		super(positionX,positionY, niveau);
 		mario = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"mario"+File.separator+"Mario1.png");
 		animationMario = new BufferedImage[6];
 		for(int a=1;a<6;a++) {
