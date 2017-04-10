@@ -31,7 +31,7 @@ public class Niveau extends JPanel{
   private boolean shootingStar = false; //Booleen pour shooting star , true pour actif , false pour inactif
   protected int entree_utilisateur = 0;
   private int posmin = 0;
-
+  private Pattern pattern;
   private boolean insane;
   private JFrame jf;
   public int getEntreeUtilisateur(){
@@ -41,6 +41,11 @@ public class Niveau extends JPanel{
   public Avion getAvion(){
     return avion;
   }
+
+  public Pattern getPattern(){
+    return pattern;
+  }
+
 
 
   public boolean getDennisExist(){
@@ -137,7 +142,7 @@ public class Niveau extends JPanel{
     int n = 1,nd = 0,nj = 0,np = 0; //Numero dimage pour les animations de mario , de denis , de jagger et de portail
     int tm = 0,tss = 0,tj = 0,td = 0,tp = 0; //Timer pour Mario , shooting star , l'effet du jagger , denis brogniart et pour les portails
     int vj=0;
-    int ecart = 0; // entier calculant la diff�rence (pour les portails)
+    int ecart = 0; // entier calculant la difference (pour les portails)
     int vd=3; //vie de denis brogniart
     int nbouteille=0;
     int nbrtir=0;
@@ -147,8 +152,8 @@ public class Niveau extends JPanel{
     Random rd = new Random();  //Random pour l'apparition de denis
     Random rp = new Random(); //Random pour l'apparition des portails
     this.avion = new Avion(50,50, this);
-    Barre barre = new Barre(0, 0, this);
-    Barre barre2 = new Barre(0, 0, this);
+    Barre barre = new Barre(0, 0, this, 0);
+    Barre barre2 = new Barre(0, 0, this, 1);
     Bonus bonusk = new Bonus(0,0, this);
     Mario mario = new Mario(0,0, this);
     Denis denis = new Denis(0,650, this);
@@ -159,7 +164,7 @@ public class Niveau extends JPanel{
     Portal ptwo = new Portal(0,0, this);
     Son ss = new Son("/res/son/shootingstar.wav");
     Jagger jg = new Jagger(0,0, this);
-    Pattern pattern = new Pattern();
+    pattern = new Pattern();
     pattern.generatePattern();
     barre.setPositionX(pattern.getPatternX1());
     barre2.setPositionX(pattern.getPatternX2());
@@ -170,12 +175,12 @@ public class Niveau extends JPanel{
     this.addNewObject(fd);
     this.addNewObject(jg);
     this.addNewObject(avion);
-    Hitbox hitbox = new Hitbox(); //Hitbox de l'avion
     Rectangle tirh = new Rectangle(); //Hitbox du tir
     Rectangle denish = new Rectangle(); //Hitbox de denis
 
 
     while(!defaite){
+      pattern.generatePattern();
       entreeUtilisateur = getEntreeUtilisateur();
       this.score=this.score+this.vitesse/6;
       long temps_debut_boucle = System.currentTimeMillis();
@@ -198,15 +203,14 @@ public class Niveau extends JPanel{
           posmin=-105;
           ss.play();
         }
-        /*
-        List<String> lines = Files.lines(Paths.get("myfile.txt")).collect(Collectors.toList());
-        */
         //Si le score est a %5 ajout d'un Dennis
         if((((this.score/60)%1)==0) && (this.objects.contains(denis)==false)&&((this.score/60)!=0)) {
           this.addNewObject(denis);
           this.dennisExist = true;
         }
         if((rp.nextInt(900)==0)&&(this.objects.contains(pone)==false)) {
+          pone = new Portal(0,0,this);
+          ptwo = new Portal(0,0,this);
           this.addNewObject(pone);
           this.addNewObject(ptwo);
           pone.setPositions(1);
@@ -326,35 +330,15 @@ public class Niveau extends JPanel{
           }
         }
       }
+      Hitbox hitbox = new Hitbox(); //Hitbox de l'avion
 
-      pattern.generatePattern();
-      if(barre.getPositionY()<=0-80){
-        barre.setPositionY(800);
-        barre.setPositionX(pattern.getPatternX1());
-      }
-      if(barre2.getPositionY()<=0-80){
-        barre2.setPositionY(800);
-        barre2.setPositionX(pattern.getPatternX2());
-      }
+      hitbox.setEtat(getEntreeUtilisateur(),avion,mini);
 
-      if(this.getEntreeUtilisateur() == 2) {
-        hitbox.setEtat(2,avion,mini);
-      } else if (this.getEntreeUtilisateur()==1) {
-        hitbox.setEtat(1,avion,mini);
-      } else if(this.getEntreeUtilisateur() == 0) {
-        hitbox.setEtat(0,avion,mini);
-      }
+
       if(this.bonuseffect!=1) {
         if(hitbox.detectCollision(objects)==1) {
-          try{
-            avion.setImageAvionActuel(13);
-            Thread.sleep(500);
-            this.defaite=true;
-            ss.stop();
-          }
-          catch(InterruptedException e){
-            System.err.println("Erreur hitbox");
-          }
+          ss.stop();
+          loose();
         }
       }
 
@@ -416,7 +400,7 @@ public class Niveau extends JPanel{
 
       hitbox.reset();
 
-      this.repaint();
+
 
       long temps_consomme = System.currentTimeMillis() - temps_debut_boucle;
       if(temps_consomme<16.6666) {
@@ -445,9 +429,13 @@ public class Niveau extends JPanel{
     for(int i = 0; i < justCreated.size(); i++){
       objects.add(justCreated.get(i));
     }
+    Hitbox hitbox = new Hitbox(); //Hitbox de l'avion
+    //hitbox.setEtat(getEntreeUtilisateur(),avion,mini);
+
+
 
     this.repaint();
-
+    justCreated.clear();
   }
   public int getNiveauEntreeUtilisateur(){
     return entreeUtilisateur;
@@ -457,5 +445,15 @@ public class Niveau extends JPanel{
   }
   public boolean getShootingStar(){
     return shootingStar;
+  }
+  private void loose(){
+    try{
+      avion.setImageAvionActuel(13);
+      Thread.sleep(500);
+      this.defaite=true;
+    }
+    catch(InterruptedException e){
+      System.err.println("Error when trying to execute loose");
+    }
   }
 }

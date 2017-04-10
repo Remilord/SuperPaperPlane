@@ -9,8 +9,12 @@ public class Barre extends GameObject {
 	private BufferedImage barreb;
 	private BufferedImage barref;
 	private BufferedImage barress;
-	public Barre(int x,int y, Niveau niveau) {
+	private int number;
+	private Niveau niveau;
+	public Barre(int x,int y, Niveau niveau, Integer num) {
 		super(0, 0, niveau);
+		this.number = num;
+		this.niveau = niveau;
 		barress = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"barre"+File.separator+"BarreSS.png");
 		barre = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"barre"+File.separator+"Barre.png");
 		barreb = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"barre"+File.separator+"Barre.png");
@@ -29,18 +33,29 @@ public class Barre extends GameObject {
 	}
 	public void setImageSS(boolean onss) {
 		if(onss) {
-		this.barre=this.barress;
-	} else {
-		this.barre=this.barreb;
-	}
+			this.barre=this.barress;
+		} else {
+			this.barre=this.barreb;
+		}
 	}
 	@Override
-  public BufferedImage getImage() {
-    return barre;
-  }
+	public BufferedImage getImage() {
+		return barre;
+	}
 
 	@Override
 	public void deplacement(int vitesse){
-			this.setPositionY(this.getPositionY()-vitesse);
+		this.setPositionY(this.getPositionY()-vitesse);
+		if(getPositionY()<=0-80){
+
+			setPositionY(800);
+
+			if(number == 0){
+				setPositionX(niveau.getPattern().getPatternX1());
+			}
+			else{
+				setPositionX(niveau.getPattern().getPatternX2());
+			}
+		}
 	}
 }

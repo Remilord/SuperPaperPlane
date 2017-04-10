@@ -10,6 +10,7 @@ public class Avion extends GameObject{
   private BufferedImage[] PionPlane;
   private Niveau niveau;
   private boolean isShooting = false;
+  private boolean invincible = false;
   public Avion(int positionX, int positionY, Niveau niveau){
     super(positionX, positionY, niveau);
     this.niveau = niveau;
@@ -41,7 +42,7 @@ public class Avion extends GameObject{
   public void deplacement(int vitesse){
     if(niveau.getNiveauEntreeUtilisateur() == 2){
       if(getPositionX() > niveau.getPosMin()){
-        setPositionX(getPositionX()-niveau.getVitesse()-2);
+        setPositionX(getPositionX()-niveau.getVitesse()+2);
         setImageAvionActuel((niveau.getBonusEffect()*3)+3);
       }
     }

@@ -5,6 +5,7 @@ import java.io.File;
 public class Denis extends GameObject {
 	private BufferedImage denis;
 	private BufferedImage[] animationdenis;
+	private int hp;
 	private boolean dennisToTheLeft = false; // Booleen pour la ronde de denis gauche vers droite pour false  puis droite vers gauche pour true
 
 	public Denis(int x,int y, Niveau niveau) {
@@ -16,6 +17,7 @@ public class Denis extends GameObject {
 		}
 		this.largeur=100;
 		this.hauteur=100;
+		this.hp = 3;
 	}
 	public void setImageDenisActuel(int n) {
 		this.denis=animationdenis[n];
@@ -38,8 +40,11 @@ public class Denis extends GameObject {
 		}else if(getPositionX() <= 0 ){
 			dennisToTheLeft = false;
 		}
+	}
 
-
+	@Override
+	public boolean remove(){
+		return hp == 0;
 	}
 
 }

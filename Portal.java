@@ -49,6 +49,6 @@ public class Portal extends GameObject {
 
 			@Override
 			public boolean remove(){
-				return getPositionY() < - 100;
+				return getPositionY() < -100;
 			}
 }
