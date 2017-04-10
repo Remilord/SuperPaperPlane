@@ -42,7 +42,7 @@ public class Niveau extends JPanel{
     this.jf = jf;
     this.insane = insane;
     this.defaite = false;
-    
+
     background = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"Niveau.png");
     backgroundBlur = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"Niveauflou.png");
     backgroundShootingStar = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"NiveauShootingStar.png");
@@ -99,7 +99,7 @@ public class Niveau extends JPanel{
     g2d.drawImage(background, null, 0, 0);
     int size = objects.size();
     for(int i = 0; i < size; i++){
-      System.out.println("nb objets : " + size);
+
       g2d.drawImage(objects.get(i).getImage(), null, objects.get(i).getPositionX(), objects.get(i).getPositionY());
     }
 
@@ -136,6 +136,10 @@ public class Niveau extends JPanel{
     Portal ptwo = new Portal(0,0, this);
     Son ss = new Son("/res/son/shootingstar.wav");
     Jagger jg = new Jagger(0,0, this);
+    Pattern pattern = new Pattern();
+    pattern.generatePattern();
+    barre.setPositionX(pattern.getPatternX1());
+    barre2.setPositionX(pattern.getPatternX2());
     this.addNewObject(barre);
     this.addNewObject(barre2);
     this.addNewObject(bonusk);
@@ -143,7 +147,7 @@ public class Niveau extends JPanel{
     this.addNewObject(fd);
     this.addNewObject(jg);
     this.addNewObject(avion);
-    barre2.setPositionX(-500 + (int)(Math.random() * ((150) + 1)));
+    //barre2.setPositionX(-500 + (int)(Math.random() * ((150) + 1)));
     Hitbox hitbox = new Hitbox(); //Hitbox de l'avion
     Rectangle tirh = new Rectangle(); //Hitbox du tir
     Rectangle denish = new Rectangle(); //Hitbox de denis
@@ -331,14 +335,14 @@ public class Niveau extends JPanel{
         }
       }
 
-
+      pattern.generatePattern();
       if(barre.getPositionY()<=0-80){
         barre.setPositionY(800);
-        barre.setPositionX(280 + (int)(Math.random() * ((400 - 280) + 1)));
+        barre.setPositionX(pattern.getPatternX1());
       }
       if(barre2.getPositionY()<=0-80){
         barre2.setPositionY(800);
-        barre2.setPositionX(-500 + (int)(Math.random() * ((150) + 1)));
+        barre2.setPositionX(pattern.getPatternX2());
       }
 
       if(this.getEntreeUtilisateur() == 2) {
