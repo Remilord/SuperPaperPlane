@@ -274,17 +274,17 @@ public class Niveau extends JPanel{
       if(this.getEntreeUtilisateur() == 2){
         if(avion.getPositionX() > posmin){
           avion.setPositionX(avion.getPositionX()-5);
-          avion.setImageAvionActuel("gauche",bonuseffect);
+          avion.setImageAvionActuel((bonuseffect*3)+3);
         }
       }
       else if(this.getEntreeUtilisateur() == 1){
         if(avion.getPositionX() < 605){
           avion.setPositionX(avion.getPositionX()+5);
-          avion.setImageAvionActuel("droite",bonuseffect);
+          avion.setImageAvionActuel((bonuseffect*3)+1);
         }
       }
       else if(this.getEntreeUtilisateur() == 0){
-        avion.setImageAvionActuel("bas",bonuseffect);
+        avion.setImageAvionActuel((bonuseffect*3)+2);
         if(this.objects.contains(denis)&&(this.objects.contains(tir)==false)) {
           this.addNewObject(tir);
           tir.setPositionX(avion.getPositionX()+40);
@@ -347,7 +347,7 @@ public class Niveau extends JPanel{
       if(this.bonuseffect!=1) {
         if(hitbox.detectCollision(objects)==1) {
           try{
-            avion.setImageAvionActuel("crash",0);
+            avion.setImageAvionActuel(13);
             Thread.sleep(500);
             this.defaite=true;
             ss.stop();
