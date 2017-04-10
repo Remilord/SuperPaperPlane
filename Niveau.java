@@ -42,6 +42,7 @@ public class Niveau extends JPanel{
     this.jf = jf;
     this.insane = insane;
     this.defaite = false;
+    
     background = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"Niveau.png");
     backgroundBlur = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"Niveauflou.png");
     backgroundShootingStar = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"NiveauShootingStar.png");
@@ -171,6 +172,9 @@ public class Niveau extends JPanel{
           posmin=-105;
           ss.play();
         }
+        /*
+        List<String> lines = Files.lines(Paths.get("myfile.txt")).collect(Collectors.toList());
+        */
         //Si le score est a %5 ajout d'un Dennis
         if((((this.score/60)%5)==0) && (this.objects.contains(denis)==false)&&((this.score/60)!=0)) {
           this.addNewObject(denis);
