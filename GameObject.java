@@ -18,8 +18,7 @@ abstract class GameObject extends JComponent{
     this.positionX = x;
 
   }
-  public void paintComponent(Graphics pinceau){
-  }
+
   public int getLargeur(){
     return this.largeur;
   }
@@ -56,6 +55,10 @@ abstract class GameObject extends JComponent{
 
   public Niveau getNiveau(){
     return niveau;
+  }
+
+  public boolean create(){
+    return false;
   }
 
 }

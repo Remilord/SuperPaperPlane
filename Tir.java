@@ -6,8 +6,10 @@ import java.util.ArrayList;
 public class Tir extends GameObject {
 			private BufferedImage tir;
 			private ArrayList<GameObject> objects;
+			private Niveau niveau;
 			public Tir(int x,int y, Niveau niveau) {
 				super(x, y, niveau);
+				this.niveau = niveau;
 				this.objects = objects;
 				tir=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"denis"+File.separator+"Tir.png");
 				this.largeur=15;
@@ -20,12 +22,22 @@ public class Tir extends GameObject {
 
 			@Override
 			public void deplacement(int vitesse){
-				setPositionY(getPositionY()+15);
-
+				if(niveau.getDennisExist()&& niveau.getAvion().getIsShooting()){
+	        setPositionY(getPositionY()+25);
+	      }
 			}
 
 			@Override
 			public boolean remove(){
-				return getPositionY() >= 850;
+				if(getPositionY() >= 850){
+					niveau.getAvion().setIsShooting(false);
+					return true;
+				}
+				return false;
 			}
+
+
+
+
+
 }

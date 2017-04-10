@@ -15,26 +15,52 @@ import java.util.Iterator;
 
 public class Niveau extends JPanel{
   private ArrayList<GameObject> objects = new ArrayList<GameObject>();
+  private boolean dennisExist = false;
   private int score = 0;
-  private int vitesse=6;
+  private int vitesse= 8;
   private int bonuseffect=0;
   private int temps = 0;
+  private Avion avion;
   private ClavierInsane ci;
   private BufferedImage background; //Base
   private BufferedImage backgroundBlur; //flou
   private BufferedImage backgroundShootingStar; //Shooting Star
   private BufferedImage backgroundBase; //Base
   private boolean defaite;
-
+  private int entreeUtilisateur;
+  private boolean shootingStar = false; //Booleen pour shooting star , true pour actif , false pour inactif
   protected int entree_utilisateur = 0;
+  private int posmin = 0;
+
   private boolean insane;
   private JFrame jf;
   public int getEntreeUtilisateur(){
     return this.entree_utilisateur;
   }
 
+  public Avion getAvion(){
+    return avion;
+  }
+
+
+  public boolean getDennisExist(){
+    return dennisExist;
+  }
+  public ArrayList<GameObject> getArrayList(){
+    return objects;
+  }
+  public int getBonusEffect(){
+    return bonuseffect;
+  }
+  public int getVitesse(){
+    return vitesse;
+  }
+
   public void setEntreeUtilisateur(int x){
     this.entree_utilisateur = x;
+  }
+  public int getPosMin(){
+    return posmin;
   }
 
   public Niveau(boolean insane, JFrame jf) {
@@ -99,10 +125,8 @@ public class Niveau extends JPanel{
     g2d.drawImage(background, null, 0, 0);
     int size = objects.size();
     for(int i = 0; i < size; i++){
-
       g2d.drawImage(objects.get(i).getImage(), null, objects.get(i).getPositionX(), objects.get(i).getPositionY());
     }
-
     g2d.drawString(Integer.toString(this.score/60), 250, 750);
   }
 
@@ -110,20 +134,19 @@ public class Niveau extends JPanel{
 
   public void run(){
 
-    int n=1,nd=0,nj=0,np=0; //Numero dimage pour les animations de mario , de denis , de jagger et de portail
-    int tm=0,tss=0,tj=0,td=0,tp=0; //Timer pour Mario , shooting star , l'effet du jagger , denis brogniart et pour les portails
+    int n = 1,nd = 0,nj = 0,np = 0; //Numero dimage pour les animations de mario , de denis , de jagger et de portail
+    int tm = 0,tss = 0,tj = 0,td = 0,tp = 0; //Timer pour Mario , shooting star , l'effet du jagger , denis brogniart et pour les portails
     int vj=0;
     int ecart = 0; // entier calculant la diff�rence (pour les portails)
     int vd=3; //vie de denis brogniart
     int nbouteille=0;
     int nbrtir=0;
-    int posmin = 0;
-    boolean shootingStar = false; //Booleen pour shooting star , true pour actif , false pour inactif
+
     boolean mini=false;
     Random rss = new Random(); //Random pour le shooting star
     Random rd = new Random();  //Random pour l'apparition de denis
     Random rp = new Random(); //Random pour l'apparition des portails
-    Avion avion = new Avion(50,50, this);
+    this.avion = new Avion(50,50, this);
     Barre barre = new Barre(0, 0, this);
     Barre barre2 = new Barre(0, 0, this);
     Bonus bonusk = new Bonus(0,0, this);
@@ -147,14 +170,13 @@ public class Niveau extends JPanel{
     this.addNewObject(fd);
     this.addNewObject(jg);
     this.addNewObject(avion);
-    //barre2.setPositionX(-500 + (int)(Math.random() * ((150) + 1)));
     Hitbox hitbox = new Hitbox(); //Hitbox de l'avion
     Rectangle tirh = new Rectangle(); //Hitbox du tir
     Rectangle denish = new Rectangle(); //Hitbox de denis
 
 
     while(!defaite){
-
+      entreeUtilisateur = getEntreeUtilisateur();
       this.score=this.score+this.vitesse/6;
       long temps_debut_boucle = System.currentTimeMillis();
       if(bonusk.sousEffet(this.bonuseffect)) {
@@ -180,8 +202,9 @@ public class Niveau extends JPanel{
         List<String> lines = Files.lines(Paths.get("myfile.txt")).collect(Collectors.toList());
         */
         //Si le score est a %5 ajout d'un Dennis
-        if((((this.score/60)%5)==0) && (this.objects.contains(denis)==false)&&((this.score/60)!=0)) {
+        if((((this.score/60)%1)==0) && (this.objects.contains(denis)==false)&&((this.score/60)!=0)) {
           this.addNewObject(denis);
+          this.dennisExist = true;
         }
         if((rp.nextInt(900)==0)&&(this.objects.contains(pone)==false)) {
           this.addNewObject(pone);
@@ -278,38 +301,6 @@ public class Niveau extends JPanel{
         }
       }
 
-      //DEP DE L'AVION
-      if(this.getEntreeUtilisateur() == 2){
-        if(avion.getPositionX() > posmin){
-          avion.setPositionX(avion.getPositionX()-5);
-          avion.setImageAvionActuel((bonuseffect*3)+3);
-        }
-      }
-      else if(this.getEntreeUtilisateur() == 1){
-        if(avion.getPositionX() < 605){
-          avion.setPositionX(avion.getPositionX()+5);
-          avion.setImageAvionActuel((bonuseffect*3)+1);
-        }
-      }
-      else if(this.getEntreeUtilisateur() == 0){
-        avion.setImageAvionActuel((bonuseffect*3)+2);
-        if(this.objects.contains(denis)&&(this.objects.contains(tir)==false)) {
-          this.addNewObject(tir);
-          tir.setPositionX(avion.getPositionX()+40);
-          tir.setPositionY(avion.getPositionY()+100);
-        }
-      }
-
-
-      if(shootingStar && insane) {
-        if(avion.getPositionX() > 505) {
-          avion.setPositionX(-50);
-        }else if (avion.getPositionX() < -75) {
-          avion.setPositionX(490);
-        }
-      }
-
-
       //---------------------DEPLACEMENT--------------------------
       objectUpdate(this.objects);
 
@@ -331,6 +322,7 @@ public class Niveau extends JPanel{
           tirh.setBounds(0, 0, 0, 0);
           if(vd==0) {
             this.objects.remove(denis);
+            this.dennisExist = false;
           }
         }
       }
@@ -440,12 +432,30 @@ public class Niveau extends JPanel{
 
   private void objectUpdate(ArrayList<GameObject> objects){
     Iterator<GameObject> objIt = objects.iterator();
+    ArrayList<GameObject> justCreated = new ArrayList<GameObject>();
     while(objIt.hasNext()) {
       GameObject obj = objIt.next();
       obj.deplacement(this.vitesse);
       if(obj.remove())
         objIt.remove();
-
+      if(obj.create()){
+        justCreated.add(new Tir(avion.getPositionX()+40,avion.getPositionY()+100,this));
+      }
     }
+    for(int i = 0; i < justCreated.size(); i++){
+      objects.add(justCreated.get(i));
+    }
+
+    this.repaint();
+
+  }
+  public int getNiveauEntreeUtilisateur(){
+    return entreeUtilisateur;
+  }
+  public boolean getInsane(){
+    return insane;
+  }
+  public boolean getShootingStar(){
+    return shootingStar;
   }
 }
