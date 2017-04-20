@@ -34,9 +34,15 @@ public class Niveau extends JPanel{
   private Pattern pattern;
   private boolean insane;
   private JFrame jf;
-  private boolean isDenisAlive = false;
+  private int actualFrame;
+  private EventSpawner eventSpawner = new EventSpawner(this);
+
   public int getEntreeUtilisateur(){
     return this.entree_utilisateur;
+  }
+
+  public EventSpawner getEventSpawner(){
+    return eventSpawner;
   }
 
   public Avion getAvion(){
@@ -52,10 +58,6 @@ public class Niveau extends JPanel{
   }
 
 
-
-  public boolean getIsDenisAlive(){
-    return isDenisAlive;
-  }
   public ArrayList<GameObject> getArrayList(){
     return objects;
   }
@@ -78,7 +80,7 @@ public class Niveau extends JPanel{
     this.jf = jf;
     this.insane = insane;
     this.defaite = false;
-
+    actualFrame = 0;
     background = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"Niveau.png");
     backgroundBlur = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"Niveauflou.png");
     backgroundShootingStar = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"NiveauShootingStar.png");
@@ -86,7 +88,7 @@ public class Niveau extends JPanel{
     setFocusable(true);
     clavierInsane = new ClavierInsane(this);
     addKeyListener(clavierInsane);
-    avion = new Avion(50, 50, this);
+    avion = new Avion(50, 50, this, eventSpawner);
     addNewObject(avion);
   }
 
@@ -123,12 +125,9 @@ public class Niveau extends JPanel{
     }
   }
   public int getScore() {
-    return this.score/60;
+    return this.score;
   }
 
-  public void setIsDenisAlive(boolean b){
-    isDenisAlive = b;
-  }
 
   @Override
   public void paintComponent(Graphics g) {
@@ -142,7 +141,7 @@ public class Niveau extends JPanel{
     for(int i = 0; i < size; i++){
       g2d.drawImage(objects.get(i).getImage(), null, objects.get(i).getPositionX(), objects.get(i).getPositionY());
     }
-    g2d.drawString(Integer.toString(this.score/60), 250, 750);
+    g2d.drawString(Integer.toString(this.score), 250, 750);
   }
 
 
@@ -150,15 +149,19 @@ public class Niveau extends JPanel{
     vitesse = v;
   }
 
+  public int getActualFrame(){
+    return actualFrame;
+  }
+
+
   public void run(){
 
     int n = 1,nd = 0,nj = 0,np = 0; //Numero dimage pour les animations de mario , de denis , de jagger et de portail
-    int tm = 0,tss = 0,tj = 0,td = 0,tp = 0; //Timer pour Mario , shooting star , l'effet du jagger , denis brogniart et pour les portails
+    int tss = 0,tj = 0,td = 0,tp = 0; //Timer pour Mario , shooting star , l'effet du jagger , denis brogniart et pour les portails
     int vj=0;
     int ecart = 0; // entier calculant la difference (pour les portails)
     int vd=3; //vie de denis brogniart
     int nbouteille=0;
-
     boolean mini=false;
     Random rss = new Random(); //Random pour le shooting star
     Random rd = new Random();  //Random pour l'apparition de denis
@@ -167,7 +170,6 @@ public class Niveau extends JPanel{
     Barre barre = new Barre(0, 0, this, 0);
     Barre barre2 = new Barre(0, 0, this, 1);
     Bonus bonusk = new Bonus(0,0, this);
-    Mario mario = new Mario(0,0, this);
     Feu fg = new Feu(0,0, this);
     Feu fd = new Feu(435,0, this);
     Portal pone = new Portal(0,0, this);
@@ -187,18 +189,21 @@ public class Niveau extends JPanel{
 
 
     while(!defaite){
+      if(actualFrame == 60){
+        actualFrame = 0;
+        score = score + vitesse / 8;
+      }
+      actualFrame++;
       pattern.generatePattern();
       entreeUtilisateur = getEntreeUtilisateur();
-      this.score=this.score+this.vitesse/6;
       long temps_debut_boucle = System.currentTimeMillis();
+
       if(bonusk.sousEffet(this.bonuseffect)) {
         this.temps++;
       }
-      if(insane){
-        if(this.score%600==0) {
-          this.addNewObject(mario);
-          mario.setImageMarioActuel(1);
-        }
+      if(insane && score != 0){
+        eventSpawner.calculateEvents();
+
 
         if((rss.nextInt(3500)==0)&&(shootingStar==false)) {
           this.setBackgroundShootingStar(true);
@@ -211,9 +216,6 @@ public class Niveau extends JPanel{
           ss.play();
         }
         //Si le score est a %5 ajout d'un Dennis
-        if((((this.score/60)%5)==0) && (isDenisAlive == false)&&((this.score/60)!=0)) {
-          this.addNewObject(new Denis(0, 650, this));
-        }
         if((rp.nextInt(900)==0)&&(this.objects.contains(pone)==false)) {
           pone = new Portal(0,0,this);
           ptwo = new Portal(0,0,this);
@@ -252,23 +254,8 @@ public class Niveau extends JPanel{
 
 
 
-        if(this.objects.contains(mario)) {
-          tm=tm+1;
-          if(tm==1) {
-            Son.playTempSound("/res/son/Non.wav");
-          }
-          if(tm==200) {
-            n=1;
-            tm=0;
-            objects.remove(mario);
-          }else if((tm==15)||(tm==30)||(tm==45)||(tm==60)) {
-            n=n+1;
-            mario.setImageMarioActuel(n);
-          }
 
-        }
-
-        if(isDenisAlive) {
+        /*if(isDenisAlive) {
           td++;
           if((td==15)||(td==30)||(td==45)||(td==60)) {
             if(nd==1) {
@@ -287,7 +274,7 @@ public class Niveau extends JPanel{
             td=0;
             //denis.setImageDenisActuel(nd);
           }
-        }
+        }*/
         if((vj==5)||(vj==10)||(vj==15)||(vj==20)) {
           nj=nj+1;
           jg.setImageJagger(nj);

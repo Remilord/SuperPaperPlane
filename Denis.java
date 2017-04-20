@@ -8,18 +8,19 @@ public class Denis extends GameObject {
 	private BufferedImage[] animationdenis;
 	private int hp;
 	private boolean dennisToTheLeft = false; // Booleen pour la ronde de denis gauche vers droite pour false  puis droite vers gauche pour true
-
-	public Denis(int x,int y, Niveau niveau) {
+	private EventSpawner eventSpawner;
+	public Denis(int x,int y, Niveau niveau, EventSpawner e) {
 		super(x, y, niveau);
 		objectType = ObjectType.ENEMY;
-		niveau.setIsDenisAlive(true);
+		eventSpawner = e;
+		e.setIsDenis(true);
 		denis = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"denis"+File.separator+"Denis0.png");
-		animationdenis=new BufferedImage[6];
-		for(int a=0;a<6;a++) {
-			animationdenis[a]=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"denis"+File.separator+"Denis"+a+".png");
+		animationdenis = new BufferedImage[6];
+		for(int a = 0; a<6 ;a++) {
+			animationdenis[a] = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"denis"+File.separator+"Denis"+a+".png");
 		}
-		this.largeur=100;
-		this.hauteur=100;
+		this.largeur = 100;
+		this.hauteur = 100;
 		this.hp = 3;
 	}
 	public void setImageDenisActuel(int n) {
@@ -48,7 +49,7 @@ public class Denis extends GameObject {
 	@Override
 	public boolean remove(){
 		if(hp == 0){
-			niveau.setIsDenisAlive(false);
+			eventSpawner.setIsDenis(false);
 			return true;
 		}
 		return false;

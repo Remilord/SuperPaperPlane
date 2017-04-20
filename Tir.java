@@ -7,18 +7,17 @@ import java.util.ArrayList;
 
 public class Tir extends GameObject {
 			private BufferedImage tir;
-			private ArrayList<GameObject> objects;
 			private Niveau niveau;
+			private EventSpawner eventSpawner;
 
-			public Tir(int x,int y, Niveau niveau) {
+			public Tir(int x, int y, Niveau niveau, EventSpawner eventSpawner) {
 				super(x, y, niveau);
 				objectType = ObjectType.OFFENSIVE;
-
-				this.niveau = niveau;
-				this.objects = objects;
 				tir=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"denis"+File.separator+"Tir.png");
 				this.largeur=15;
 				this.hauteur=30;
+				this.eventSpawner = eventSpawner;
+				this.niveau = niveau;
 			}
 			@Override
 			public BufferedImage getImage() {
@@ -27,10 +26,10 @@ public class Tir extends GameObject {
 
 			@Override
 			public void deplacement(int vitesse){
-				if(niveau.getIsDenisAlive() && niveau.getAvion().getIsShooting()){
+				if(eventSpawner.getIsDenis() && niveau.getAvion().getIsShooting()){
 	        setPositionY(getPositionY()+25);
 	      }
-				if(!niveau.getIsDenisAlive())
+				if(!eventSpawner.getIsDenis())
 					needsToBeRemoved = true;
 			}
 
@@ -55,7 +54,7 @@ public class Tir extends GameObject {
 
 			@Override
 			public boolean canHit(GameObject g){
-				if(g.getObjectType() == ObjectType.ENEMY)
+				if(g.getObjectType() == ObjectType.ENEMY && !needsToBeRemoved)
 					return true;
 				return false;
 			}

@@ -15,15 +15,15 @@ public class Avion extends GameObject{
   private boolean isInvincible = false;
   private boolean isLittle = false;
   private boolean isHighSpeed = false;
-
   private Hitbox hitbox = new Hitbox(this);
   private int nbBottles;
   private int positionAvion; //0 pour bas, 1 pour gauche, 2 pour droite
+  private EventSpawner eventSpawner;
 
-  public Avion(int positionX, int positionY, Niveau niveau){
+  public Avion(int positionX, int positionY, Niveau niveau, EventSpawner e){
     super(positionX, positionY, niveau);
     objectType = ObjectType.PLAYER;
-
+    this.eventSpawner = e;
     this.niveau = niveau;
     positionAvion = 0;
     nbBottles = 0;
@@ -80,7 +80,7 @@ public class Avion extends GameObject{
 
   @Override
   public boolean needsToCreate(){
-    if(!isShooting && positionAvion == 0 && niveau.getIsDenisAlive())
+    if(!isShooting && positionAvion == 0 && niveau.getEventSpawner().getIsDenis())
       return true;
     else return false;
   }
@@ -88,7 +88,7 @@ public class Avion extends GameObject{
   @Override
   public GameObject createGameObject(){
     isShooting = true;
-    return new Tir(getPositionX() + 40, getPositionY() + 100, niveau);
+    return new Tir(getPositionX() + 40, getPositionY() + 100, niveau, eventSpawner);
   }
 
   @Override
