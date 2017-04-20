@@ -20,7 +20,7 @@ public class Denis extends GameObject {
 		}
 		this.largeur=100;
 		this.hauteur=100;
-		this.hp = 1;
+		this.hp = 3;
 	}
 	public void setImageDenisActuel(int n) {
 		this.denis=animationdenis[n];
@@ -49,15 +49,17 @@ public class Denis extends GameObject {
 	public boolean remove(){
 		if(hp == 0){
 			niveau.setIsDenisAlive(false);
-			return false;
+			return true;
 		}
 		return false;
 	}
 
 	@Override
 	public void whenGetHit(){
-		if(hp > 0)
+		System.out.println("Removing hp");
+		if(hp > 0){
 			hp--;
+		}
 	}
 
 	@Override

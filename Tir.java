@@ -9,6 +9,7 @@ public class Tir extends GameObject {
 			private BufferedImage tir;
 			private ArrayList<GameObject> objects;
 			private Niveau niveau;
+
 			public Tir(int x,int y, Niveau niveau) {
 				super(x, y, niveau);
 				objectType = ObjectType.OFFENSIVE;
@@ -26,13 +27,19 @@ public class Tir extends GameObject {
 
 			@Override
 			public void deplacement(int vitesse){
-				if(niveau.getDennisExist()&& niveau.getAvion().getIsShooting()){
+				if(niveau.getIsDenisAlive() && niveau.getAvion().getIsShooting()){
 	        setPositionY(getPositionY()+25);
 	      }
+				if(!niveau.getIsDenisAlive())
+					needsToBeRemoved = true;
 			}
 
 			@Override
 			public boolean remove(){
+				if(needsToBeRemoved){
+					niveau.getAvion().setIsShooting(false);
+					return true;
+				}
 				if(getPositionY() >= 850){
 					niveau.getAvion().setIsShooting(false);
 					return true;
@@ -43,7 +50,7 @@ public class Tir extends GameObject {
 
 			@Override
 			public void whenGetHit(){
-				
+				needsToBeRemoved = true;
 			}
 
 			@Override

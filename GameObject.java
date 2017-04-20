@@ -57,15 +57,17 @@ abstract class GameObject extends JComponent{
   public boolean remove(){
     return needsToBeRemoved;
   }
+  public boolean needsToCreate(){
+    return false;
+  }
+  public GameObject createGameObject(){
+    return null;
+  }
 
   public Niveau getNiveau(){
     return niveau;
   }
 
-
-  public boolean create(){
-    return false;
-  }
 
   public void createHitbox(){
 

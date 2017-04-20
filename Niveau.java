@@ -16,7 +16,6 @@ import java.util.Iterator;
 
 public class Niveau extends JPanel{
   private ArrayList<GameObject> objects = new ArrayList<GameObject>();
-  private boolean dennisExist = false;
   private int score = 0;
   private int vitesse= 8;
   private int bonuseffect=0;
@@ -54,8 +53,8 @@ public class Niveau extends JPanel{
 
 
 
-  public boolean getDennisExist(){
-    return dennisExist;
+  public boolean getIsDenisAlive(){
+    return isDenisAlive;
   }
   public ArrayList<GameObject> getArrayList(){
     return objects;
@@ -159,7 +158,6 @@ public class Niveau extends JPanel{
     int ecart = 0; // entier calculant la difference (pour les portails)
     int vd=3; //vie de denis brogniart
     int nbouteille=0;
-    int nbrtir=0;
 
     boolean mini=false;
     Random rss = new Random(); //Random pour le shooting star
@@ -170,7 +168,6 @@ public class Niveau extends JPanel{
     Barre barre2 = new Barre(0, 0, this, 1);
     Bonus bonusk = new Bonus(0,0, this);
     Mario mario = new Mario(0,0, this);
-    Tir tir = new Tir(0,0, this);
     Feu fg = new Feu(0,0, this);
     Feu fd = new Feu(435,0, this);
     Portal pone = new Portal(0,0, this);
@@ -187,8 +184,6 @@ public class Niveau extends JPanel{
     this.addNewObject(fg);
     this.addNewObject(fd);
     this.addNewObject(jg);
-    Rectangle tirh = new Rectangle(); //Hitbox du tir
-    Rectangle denish = new Rectangle(); //Hitbox de denis
 
 
     while(!defaite){
@@ -216,10 +211,8 @@ public class Niveau extends JPanel{
           ss.play();
         }
         //Si le score est a %5 ajout d'un Dennis
-        if((((this.score/60)%5)==0) && (isDenisAlive==false)&&((this.score/60)!=0)) {
-          System.out.println("Adding Denis");
+        if((((this.score/60)%5)==0) && (isDenisAlive == false)&&((this.score/60)!=0)) {
           this.addNewObject(new Denis(0, 650, this));
-          this.dennisExist = true;
         }
         if((rp.nextInt(900)==0)&&(this.objects.contains(pone)==false)) {
           pone = new Portal(0,0,this);
@@ -410,8 +403,8 @@ public class Niveau extends JPanel{
       obj.deplacement(this.vitesse);
       if(obj.remove())
         objIt.remove();
-      if(obj.create()){
-        justCreated.add(new Tir(avion.getPositionX()+40,avion.getPositionY()+100,this));
+      if(obj.needsToCreate()){
+        justCreated.add(obj.createGameObject());
       }
     }
     for(int i = 0; i < justCreated.size(); i++){

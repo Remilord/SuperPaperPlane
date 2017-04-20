@@ -78,7 +78,18 @@ public class Avion extends GameObject{
     isInvincible = b;
   }
 
+  @Override
+  public boolean needsToCreate(){
+    if(!isShooting && positionAvion == 0 && niveau.getIsDenisAlive())
+      return true;
+    else return false;
+  }
 
+  @Override
+  public GameObject createGameObject(){
+    isShooting = true;
+    return new Tir(getPositionX() + 40, getPositionY() + 100, niveau);
+  }
 
   @Override
   public void deplacement(int vitesse){
@@ -120,14 +131,6 @@ public class Avion extends GameObject{
     hitbox.setHitboxAvion();
   }
 
-  @Override
-  public boolean create(){
-    if(!getIsShooting() && niveau.getDennisExist() &&niveau.getEntreeUtilisateur() == 0 ){
-      setIsShooting(true);
-      return true;
-    }
-    return false;
-  }
 
   @Override
   public void createHitbox(){
