@@ -5,25 +5,54 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.io.File;
+
+@SuppressWarnings("serial")
 public class Avion extends GameObject{
   private BufferedImage avionImage;
   private BufferedImage[] PionPlane;
   private Niveau niveau;
   private boolean isShooting = false;
-  private boolean invincible = false;
+  private boolean isInvincible = false;
+  private boolean isLittle = false;
+  private Hitbox hitbox = new Hitbox(this);
+  private int nbBottles;
+  private int positionAvion; //0 pour bas, 1 pour gauche, 2 pour droite
+
   public Avion(int positionX, int positionY, Niveau niveau){
     super(positionX, positionY, niveau);
     this.niveau = niveau;
+    positionAvion = 0;
+    nbBottles = 0;
     PionPlane=new BufferedImage[14];
     this.avionImage=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"avion"+File.separator+"PionPlane2.png");
     for(int a =1;a<14;a++) {
-    PionPlane[a] = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"avion"+File.separator+"PionPlane"+a+".png");
-}
+      PionPlane[a] = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"avion"+File.separator+"PionPlane"+a+".png");
+    }
     this.largeur = 100;
     this.hauteur = 75;
   }
   public void setImageAvionActuel(int i){
-	  this.avionImage=PionPlane[i];
+    this.avionImage=PionPlane[i];
+  }
+
+  public int getNumberBottles(){
+    return nbBottles;
+  }
+
+  public void setNumberBottles(int number){
+    nbBottles = number;
+  }
+
+  public void setLittle(boolean b){
+    isLittle = b;
+  }
+
+  public boolean getIsLittle(){
+    return isLittle;
+  }
+
+  public int getPositionAvion(){
+    return positionAvion;
   }
 
   @Override
@@ -37,6 +66,11 @@ public class Avion extends GameObject{
   public boolean getIsShooting(){
     return isShooting;
   }
+  public void setInvincible(boolean b){
+    isInvincible = b;
+  }
+
+
 
   @Override
   public void deplacement(int vitesse){
@@ -44,17 +78,19 @@ public class Avion extends GameObject{
       if(getPositionX() > niveau.getPosMin()){
         setPositionX(getPositionX()-niveau.getVitesse()+2);
         setImageAvionActuel((niveau.getBonusEffect()*3)+3);
+        positionAvion = 2;
       }
     }
     else if(niveau.getNiveauEntreeUtilisateur() == 1){
       if(getPositionX() < 605){
         setPositionX(getPositionX()+niveau.getVitesse()-2);
         setImageAvionActuel((niveau.getBonusEffect()*3)+1);
+        positionAvion = 1;
       }
     }
-   else if(niveau.getEntreeUtilisateur() == 0){
+    else if(niveau.getEntreeUtilisateur() == 0){
       setImageAvionActuel((niveau.getBonusEffect()*3)+2);
-
+      positionAvion = 0;
     }
 
 
@@ -65,6 +101,7 @@ public class Avion extends GameObject{
         setPositionX(490);
       }
     }
+    hitbox.setHitboxAvion();
   }
 
   @Override
@@ -74,9 +111,26 @@ public class Avion extends GameObject{
       return true;
     }
     return false;
+  }
+
+  @Override
+  public void createHitbox(){
+    hitbox.setHitboxAvion();
+  }
+
+  @Override
+  public Polygon getHitbox(){
+    //createHitbox();
+    return hitbox.getHitbox();
+  }
+
+  @Override
+  public void onHit(){
 
   }
 
-
+  public String toString(){
+    return "Avion";
+  }
 
 }

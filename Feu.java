@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 import java.io.*;
+@SuppressWarnings("serial")
 public class Feu extends GameObject {
 	private BufferedImage feugauche;
 	private BufferedImage feudroite;
@@ -29,6 +30,12 @@ public class Feu extends GameObject {
 			this.feudroite=this.feudroiteb;
 		}
 	}
+
+	@Override
+	public boolean offensive(){
+		return true;
+	}
+
 	@Override
 	public BufferedImage getImage() {
 		if(this.getPositionX()==0) {

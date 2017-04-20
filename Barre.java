@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.File;
 import java.awt.*;
 import javax.swing.*;
+@SuppressWarnings("serial")
+
 public class Barre extends GameObject {
 	private BufferedImage barre;
 	private BufferedImage barreb;
@@ -24,6 +26,12 @@ public class Barre extends GameObject {
 		this.largeur = 600;
 		this.hauteur = 80;
 	}
+
+	@Override
+	public boolean offensive(){
+		return true;
+	}
+
 	public void setFlou(boolean on) {
 		if(on) {
 			this.barre=this.barref;

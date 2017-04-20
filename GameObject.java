@@ -4,13 +4,15 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.io.File;
+@SuppressWarnings("serial")
+
 abstract class GameObject extends JComponent{
   protected int positionX;
   protected int positionY;
   protected int largeur;
   protected int hauteur;
   protected BufferedImage img;
-  private final Niveau niveau;
+  protected final Niveau niveau;
   public GameObject(int x, int y, Niveau niveau){
 	  this.setDoubleBuffered(true);
     this.niveau = niveau;
@@ -57,8 +59,29 @@ abstract class GameObject extends JComponent{
     return niveau;
   }
 
+  public boolean offensive(){
+    return false;
+  }
+
   public boolean create(){
     return false;
+  }
+
+  public void createHitbox(){
+
+  }
+
+  public Polygon getHitbox(){
+    int xPoints[] = {getPositionX(), getPositionX() + getLargeur()};
+    int yPoints[] = {getPositionY(), getPositionY() + getHauteur()};
+
+    return new Polygon(xPoints, yPoints, xPoints.length);
+  }
+  /*polygon.intersects(Rectangle2D)*/
+  //Pour avoir un Rectangle2D : getBounds2D
+
+  public void onHit(){
+    niveau.loose();
   }
 
 }

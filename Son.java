@@ -15,10 +15,12 @@ public class Son {
 		}
 	}
 	public void play() {
-		c.start();
+		if(c != null)
+			c.start();
 	}
 	public void stop() {
-		c.stop();
+		if(c != null)
+			c.stop();
 	}
 	public Clip getClip() {
 		return c;

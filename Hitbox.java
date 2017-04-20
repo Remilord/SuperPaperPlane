@@ -8,54 +8,69 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.KeyListener;
+@SuppressWarnings("serial")
 
 public class Hitbox extends Polygon {
-	public Hitbox() {
-		super();
-	}
-	public void setEtat(int pos,GameObject a,boolean mini) {
-		if(!(mini)) {
-			if(pos==0) { /*Position vers le bas */
-			       this.addPoint(a.getPositionX()+29,a.getPositionY()+7);
-			       this.addPoint(a.getPositionX()+78,a.getPositionY()+6);
-			      this.addPoint(a.getPositionX()+47,a.getPositionY()+74);
-			}
-		if(pos==1) { /*Position vers la droite*/
-			this.addPoint(a.getPositionX()+52,a.getPositionY()+1);
-		       this.addPoint(a.getPositionX(),a.getPositionY()+44);
-		       this.addPoint(a.getPositionX()+100,a.getPositionY()+73);
-		}
-		if(pos==2) { /*Position vers la gauche*/
-		       this.addPoint(a.getPositionX()+50,a.getPositionY()+4);
-		       this.addPoint(a.getPositionX()+97,a.getPositionY()+47);
-		       this.addPoint(a.getPositionX()+3,a.getPositionY()+72);
-		}
+	private Avion avion;
+	private Polygon polygon;
 
-		} else if(mini) {
-			if(pos==0) { /*Position vers le bas */
-			       this.addPoint(a.getPositionX()+14,a.getPositionY()+3);
-			       this.addPoint(a.getPositionX()+40,a.getPositionY()+2);
-			      this.addPoint(a.getPositionX()+23,a.getPositionY()+38);
+	public Hitbox(Avion avion) {
+		super();
+		this.avion = avion;
+		polygon = new Polygon();
+	}
+
+	public Polygon getHitbox(){
+		return polygon;
+	}
+
+	public void setHitboxAvion() {
+		polygon.reset();
+		if(!avion.getIsLittle()) {
+			if(avion.getPositionAvion() == 0) { /*Position vers le bas */
+				polygon.addPoint(avion.getPositionX()+29,avion.getPositionY()+7);
+				polygon.addPoint(avion.getPositionX()+78,avion.getPositionY()+6);
+				polygon.addPoint(avion.getPositionX()+47,avion.getPositionY()+74);
 			}
-			if(pos==1) { /*Position vers la droite */
-				this.addPoint(a.getPositionX()+25,a.getPositionY()+1);
-			       this.addPoint(a.getPositionX(),a.getPositionY()+19);
-			       this.addPoint(a.getPositionX()+48,a.getPositionY()+28);
+			if(avion.getPositionAvion()==1) { /*Position vers la droite*/
+				polygon.addPoint(avion.getPositionX()+52,avion.getPositionY()+1);
+				polygon.addPoint(avion.getPositionX(),avion.getPositionY()+44);
+				polygon.addPoint(avion.getPositionX()+100,avion.getPositionY()+73);
 			}
-			if(pos==2) { /*Position vers la gauche */
-			       this.addPoint(a.getPositionX()+24,a.getPositionY()+2);
-			       this.addPoint(a.getPositionX()+49,a.getPositionY()+19);
-			       this.addPoint(a.getPositionX()+3,a.getPositionY()+30);
+			if(avion.getPositionAvion()==2) { /*Position vers la gauche*/
+				polygon.addPoint(avion.getPositionX()+50,avion.getPositionY()+4);
+				polygon.addPoint(avion.getPositionX()+97,avion.getPositionY()+47);
+				polygon.addPoint(avion.getPositionX()+3,avion.getPositionY()+72);
+			}
+
+		}else{
+			if(avion.getPositionAvion()==0) { /*Position vers le bas */
+				polygon.addPoint(avion.getPositionX()+14,avion.getPositionY()+3);
+				polygon.addPoint(avion.getPositionX()+40,avion.getPositionY()+2);
+				polygon.addPoint(avion.getPositionX()+23,avion.getPositionY()+38);
+			}
+			if(avion.getPositionAvion()==1) { /*Position vers la droite */
+				polygon.addPoint(avion.getPositionX()+25,avion.getPositionY()+1);
+				polygon.addPoint(avion.getPositionX(),avion.getPositionY()+19);
+				polygon.addPoint(avion.getPositionX()+48,avion.getPositionY()+28);
+			}
+			if(avion.getPositionAvion()==2) { /*Position vers la gauche */
+				polygon.addPoint(avion.getPositionX()+24,avion.getPositionY()+2);
+				polygon.addPoint(avion.getPositionX()+49,avion.getPositionY()+19);
+				polygon.addPoint(avion.getPositionX()+3,avion.getPositionY()+30);
 			}
 		}
 	}
+
+
+
 	public int detectCollision(ArrayList<GameObject> obj) {
-		
+
 		int i=0;
 		for(i=0;i<obj.size();i++) {
 			if(this.intersects(obj.get(i).getPositionX(),obj.get(i).getPositionY(),obj.get(i).getLargeur(),obj.get(i).getHauteur())) {
 				if((obj.get(i) instanceof Barre)||(obj.get(i) instanceof Feu)||(obj.get(i) instanceof Ah)) {
-				return 1;
+					return 1;
 				}else if(obj.get(i) instanceof Bonus) {
 					return 2;
 				}else if(obj.get(i) instanceof Jagger) {

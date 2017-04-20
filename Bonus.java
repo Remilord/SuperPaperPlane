@@ -5,6 +5,9 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.util.Random;
 import java.io.File;
+
+
+@SuppressWarnings("serial")
 public class Bonus extends GameObject {
 	private int vitesse;
 	private boolean mini;
@@ -94,4 +97,17 @@ public class Bonus extends GameObject {
         resetBonus();
       }
 	}
+
+	@Override
+	public void onHit(){
+		if(etatnum == 1){
+			niveau.getAvion().setInvincible(true);
+		}
+		else if(etatnum == 2){
+			niveau.setVitesse(12);
+		}
+		else
+			niveau.getAvion().setLittle(true);
+	}
+
 }

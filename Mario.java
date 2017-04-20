@@ -8,6 +8,8 @@ import java.applet.AudioClip;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.io.File;
+@SuppressWarnings("serial")
+
 public class Mario extends GameObject  {
 	private BufferedImage mario;
 	private BufferedImage[] animationMario;

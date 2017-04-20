@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.image.*;
 import java.io.File;
 import java.util.ArrayList;
+@SuppressWarnings("serial")
+
 public class Tir extends GameObject {
 			private BufferedImage tir;
 			private ArrayList<GameObject> objects;

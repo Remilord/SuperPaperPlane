@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.event.KeyListener;
 import java.util.Iterator;
 
+@SuppressWarnings("serial")
 
 public class Niveau extends JPanel{
   private ArrayList<GameObject> objects = new ArrayList<GameObject>();
@@ -21,7 +22,7 @@ public class Niveau extends JPanel{
   private int bonuseffect=0;
   private int temps = 0;
   private Avion avion;
-  private ClavierInsane ci;
+  private ClavierInsane clavierInsane;
   private BufferedImage background; //Base
   private BufferedImage backgroundBlur; //flou
   private BufferedImage backgroundShootingStar; //Shooting Star
@@ -40,6 +41,10 @@ public class Niveau extends JPanel{
 
   public Avion getAvion(){
     return avion;
+  }
+
+  public ClavierInsane getClavierInsane(){
+    return clavierInsane;
   }
 
   public Pattern getPattern(){
@@ -79,9 +84,9 @@ public class Niveau extends JPanel{
     backgroundShootingStar = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"NiveauShootingStar.png");
     backgroundBase = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"Niveau.png");
     setFocusable(true);
-    ci = new ClavierInsane(this);
-    addKeyListener(ci);
-
+    addKeyListener(new ClavierInsane(this));
+    avion = new Avion(50, 50, this);
+    addNewObject(avion);
   }
 
   public static BufferedImage loadBufferedImage(String path) {
@@ -136,6 +141,9 @@ public class Niveau extends JPanel{
   }
 
 
+  public void setVitesse(int v){
+    vitesse = v;
+  }
 
   public void run(){
 
@@ -151,7 +159,7 @@ public class Niveau extends JPanel{
     Random rss = new Random(); //Random pour le shooting star
     Random rd = new Random();  //Random pour l'apparition de denis
     Random rp = new Random(); //Random pour l'apparition des portails
-    this.avion = new Avion(50,50, this);
+    //this.avion = new Avion(50,50, this);
     Barre barre = new Barre(0, 0, this, 0);
     Barre barre2 = new Barre(0, 0, this, 1);
     Bonus bonusk = new Bonus(0,0, this);
@@ -174,7 +182,6 @@ public class Niveau extends JPanel{
     this.addNewObject(fg);
     this.addNewObject(fd);
     this.addNewObject(jg);
-    this.addNewObject(avion);
     Rectangle tirh = new Rectangle(); //Hitbox du tir
     Rectangle denish = new Rectangle(); //Hitbox de denis
 
@@ -240,7 +247,7 @@ public class Niveau extends JPanel{
           barre2.setFlou(false);
           fg.setFlou(false);
           fd.setFlou(false);
-          this.ci.setInversed(false);
+          //this.setInversed(false);
 
         }
 
@@ -330,19 +337,17 @@ public class Niveau extends JPanel{
           }
         }
       }
-      Hitbox hitbox = new Hitbox(); //Hitbox de l'avion
-
-      hitbox.setEtat(getEntreeUtilisateur(),avion,mini);
-
-
+      /*
+      Si l'avion est pas invinble et touche un objet game over
       if(this.bonuseffect!=1) {
         if(hitbox.detectCollision(objects)==1) {
           ss.stop();
           loose();
         }
       }
+      */
 
-
+      /*Si rencontre un bonus
       if(hitbox.detectCollision(objects)==2) {
         this.bonuseffect=bonusk.getEtatNum();
         bonusk.resetBonusStatus();
@@ -353,9 +358,9 @@ public class Niveau extends JPanel{
         bonusk.resetPosition();
       }
 
+      */
 
-
-
+      /*Si c'est du jagger
       if(hitbox.detectCollision(objects)==3) {
         if(nbouteille==0) {
           if(shootingStar==false) {
@@ -368,11 +373,13 @@ public class Niveau extends JPanel{
           jg.resetPosition();
           nbouteille++;
         }else {
-          this.ci.setInversed(true);
+          this..setInversed(true);
           tj=0;
         }
       }
+      */
 
+      /*Si c'est un portail
       if(hitbox.detectCollision(objects)==4) {
         ecart = ptwo.getPositionY() - avion.getPositionY();
         ptwo.setPositionY(avion.getPositionY()-38);
@@ -386,9 +393,9 @@ public class Niveau extends JPanel{
         this.objects.remove(pone);
         this.objects.remove(ptwo);
       }
+      */
 
-
-
+      /* Wtf?
       if(bonusk.timerBonus(this.temps)) {
         this.vitesse=bonusk.getVitesseStatus();
         mini=bonusk.getMiniStatus();
@@ -396,11 +403,7 @@ public class Niveau extends JPanel{
         this.temps=0;
       }
 
-
-
-      hitbox.reset();
-
-
+      */
 
       long temps_consomme = System.currentTimeMillis() - temps_debut_boucle;
       if(temps_consomme<16.6666) {
@@ -429,10 +432,13 @@ public class Niveau extends JPanel{
     for(int i = 0; i < justCreated.size(); i++){
       objects.add(justCreated.get(i));
     }
-    Hitbox hitbox = new Hitbox(); //Hitbox de l'avion
-    //hitbox.setEtat(getEntreeUtilisateur(),avion,mini);
 
-
+    avion.createHitbox();
+    for(int i = 1; i < objects.size(); i++){
+        if(avion.getHitbox().intersects(objects.get(i).getHitbox().getBounds2D())){
+          objects.get(i).onHit();
+        }
+    }
 
     this.repaint();
     justCreated.clear();
@@ -446,10 +452,10 @@ public class Niveau extends JPanel{
   public boolean getShootingStar(){
     return shootingStar;
   }
-  private void loose(){
+  public void loose(){
     try{
       avion.setImageAvionActuel(13);
-      Thread.sleep(500);
+      Thread.sleep(250);
       this.defaite=true;
     }
     catch(InterruptedException e){

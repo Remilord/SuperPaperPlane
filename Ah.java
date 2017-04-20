@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.image.*;
 import java.io.File;
 import java.util.ArrayList;
+@SuppressWarnings("serial")
+
 public class Ah extends GameObject {
 	private BufferedImage ah;
 	private ArrayList<GameObject> objects;
@@ -17,6 +19,11 @@ public class Ah extends GameObject {
 			public BufferedImage getImage() {
 				return this.ah;
 			}
+
+			@Override
+			public boolean offensive(){
+		    return true;
+		  }
 
 			@Override
 			public void deplacement(int vitesse){

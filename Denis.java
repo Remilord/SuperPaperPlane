@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.image.*;
 import java.awt.*;
 import java.io.File;
+@SuppressWarnings("serial")
 public class Denis extends GameObject {
 	private BufferedImage denis;
 	private BufferedImage[] animationdenis;

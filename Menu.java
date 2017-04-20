@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.awt.event.*;
+@SuppressWarnings("serial")
+
 public class Menu extends JPanel implements ActionListener {
 	private int mumenu;
 

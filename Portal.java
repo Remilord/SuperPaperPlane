@@ -4,6 +4,8 @@ import java.awt.image.*;
 import java.util.Random;
 import java.io.File;
 import java.util.ArrayList;
+@SuppressWarnings("serial")
+
 public class Portal extends GameObject {
 	private BufferedImage portal;
 	private BufferedImage[] animationportal;

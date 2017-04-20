@@ -6,6 +6,8 @@ import java.awt.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.util.ArrayList;
+@SuppressWarnings("serial")
+
 public class Jagger extends GameObject {
 	private BufferedImage jagger;
 	private BufferedImage[] animationjagger;
@@ -70,5 +72,22 @@ public class Jagger extends GameObject {
 				if((getPositionX()<=0-80)||(getPositionY()<=0-80)) {
 	        resetPosition();
 	      }
+			}
+
+			@Override
+			public void onHit(){
+				int nb = niveau.getAvion().getNumberBottles();
+				niveau.getAvion().setNumberBottles(nb+1);
+				if(nb == 0){
+					if(!niveau.getShootingStar()){
+						System.out.println("Blur needs to be set");
+						//Blur
+					}
+					//Blur
+				}
+				else{
+					niveau.getClavierInsane().setInversed(true);
+					//tj = 0??
+				}
 			}
 }

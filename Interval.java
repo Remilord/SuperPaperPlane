@@ -1,3 +1,4 @@
+@SuppressWarnings("overrides")
 
 public class Interval {
     private  int min;
@@ -24,7 +25,7 @@ public class Interval {
      *
      * @return the min endpoint of this interval
      */
-    public int min() { 
+    public int min() {
         return min;
     }
 
@@ -33,7 +34,7 @@ public class Interval {
      *
      * @return the max endpoint of this interval
      */
-    public int max() { 
+    public int max() {
         return max;
     }
 
@@ -98,4 +99,3 @@ public class Interval {
     }
 
 }
-
