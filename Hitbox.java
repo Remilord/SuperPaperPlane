@@ -61,25 +61,4 @@ public class Hitbox extends Polygon {
 			}
 		}
 	}
-
-
-
-	public int detectCollision(ArrayList<GameObject> obj) {
-
-		int i=0;
-		for(i=0;i<obj.size();i++) {
-			if(this.intersects(obj.get(i).getPositionX(),obj.get(i).getPositionY(),obj.get(i).getLargeur(),obj.get(i).getHauteur())) {
-				if((obj.get(i) instanceof Barre)||(obj.get(i) instanceof Feu)||(obj.get(i) instanceof Ah)) {
-					return 1;
-				}else if(obj.get(i) instanceof Bonus) {
-					return 2;
-				}else if(obj.get(i) instanceof Jagger) {
-					return 3;
-				}else if(obj.get(i) instanceof Portal) {
-					return 4;
-				}
-			}
-		}
-		return 0;
-	}
 }

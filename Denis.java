@@ -11,6 +11,8 @@ public class Denis extends GameObject {
 
 	public Denis(int x,int y, Niveau niveau) {
 		super(x, y, niveau);
+		objectType = ObjectType.ENEMY;
+		niveau.setIsDenisAlive(true);
 		denis = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"denis"+File.separator+"Denis0.png");
 		animationdenis=new BufferedImage[6];
 		for(int a=0;a<6;a++) {
@@ -18,7 +20,7 @@ public class Denis extends GameObject {
 		}
 		this.largeur=100;
 		this.hauteur=100;
-		this.hp = 3;
+		this.hp = 1;
 	}
 	public void setImageDenisActuel(int n) {
 		this.denis=animationdenis[n];
@@ -45,7 +47,24 @@ public class Denis extends GameObject {
 
 	@Override
 	public boolean remove(){
-		return hp == 0;
+		if(hp == 0){
+			niveau.setIsDenisAlive(false);
+			return false;
+		}
+		return false;
+	}
+
+	@Override
+	public void whenGetHit(){
+		if(hp > 0)
+			hp--;
+	}
+
+	@Override
+	public boolean canHit(GameObject g){
+		if(g.getObjectType() == ObjectType.OFFENSIVE)
+			return true;
+		return false;
 	}
 
 }

@@ -27,10 +27,6 @@ public class Barre extends GameObject {
 		this.hauteur = 80;
 	}
 
-	@Override
-	public boolean offensive(){
-		return true;
-	}
 
 	public void setFlou(boolean on) {
 		if(on) {
@@ -65,5 +61,19 @@ public class Barre extends GameObject {
 				setPositionX(niveau.getPattern().getPatternX2());
 			}
 		}
+	}
+
+
+	@Override
+	public void whenGetHit(){
+		niveau.loose();
+	}
+
+
+	@Override
+	public boolean canHit(GameObject g){
+		if(g.getObjectType() == ObjectType.PLAYER)
+			return true;
+		return false;
 	}
 }

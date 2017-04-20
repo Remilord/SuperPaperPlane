@@ -32,17 +32,25 @@ public class Feu extends GameObject {
 	}
 
 	@Override
-	public boolean offensive(){
-		return true;
-	}
-
-	@Override
 	public BufferedImage getImage() {
 		if(this.getPositionX()==0) {
 			return feugauche;
 		}else {
 			return feudroite;
 		}
+	}
+
+	@Override
+	public void whenGetHit(){
+		niveau.loose();
+	}
+
+
+	@Override
+	public boolean canHit(GameObject g){
+		if(g.getObjectType() == ObjectType.PLAYER)
+			return true;
+		return false;
 	}
 
 

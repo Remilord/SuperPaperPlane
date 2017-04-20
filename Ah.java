@@ -21,11 +21,6 @@ public class Ah extends GameObject {
 			}
 
 			@Override
-			public boolean offensive(){
-		    return true;
-		  }
-
-			@Override
 			public void deplacement(int vitesse){
 				setPositionY(getPositionY()-30);
       }
@@ -35,5 +30,21 @@ public class Ah extends GameObject {
 				if(getPositionY() <= -60)  return true;
 				return false;
 			}
+
+
+			@Override
+			public void whenGetHit(){
+		    niveau.loose();
+		  }
+
+			@Override
+			public boolean canHit(GameObject g){
+				if(g.getObjectType() == ObjectType.PLAYER){
+					return true;
+				}
+				return false;
+			}
+
+
 
 }

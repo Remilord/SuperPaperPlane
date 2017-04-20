@@ -15,6 +15,7 @@ public class Mario extends GameObject  {
 	private BufferedImage[] animationMario;
 	public Mario(int positionX,int positionY, Niveau niveau) {
 		super(positionX,positionY, niveau);
+		objectType = ObjectType.BONUS;
 		mario = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"mario"+File.separator+"Mario1.png");
 		animationMario = new BufferedImage[6];
 		for(int a=1;a<6;a++) {
@@ -40,4 +41,9 @@ public class Mario extends GameObject  {
 		  public BufferedImage getImage() {
 		    return mario;
 		  }
+
+			@Override
+			public void whenGetHit(){
+
+			}
 }

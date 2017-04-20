@@ -19,6 +19,8 @@ public class Bonus extends GameObject {
 	private Random rand;
 	public Bonus(int x,int y, Niveau niveau) {
 		super(0,0, niveau);
+		objectType = ObjectType.BONUS;
+		needsToBeRemoved = false;
 		this.rand=new Random();
 		this.bonusTras = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"bonus"+File.separator+"BonusTras.png");
 		this.bonusSpeed = Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"bonus"+File.separator+"BonusSpeed.png");
@@ -97,9 +99,15 @@ public class Bonus extends GameObject {
         resetBonus();
       }
 	}
+	@Override
+	public boolean remove(){
+    return needsToBeRemoved;
+  }
+
 
 	@Override
-	public void onHit(){
+	public void whenGetHit(){
+
 		if(etatnum == 1){
 			niveau.getAvion().setInvincible(true);
 		}
@@ -108,6 +116,15 @@ public class Bonus extends GameObject {
 		}
 		else
 			niveau.getAvion().setLittle(true);
+
+		needsToBeRemoved = true;
+	}
+
+	@Override
+	public boolean canHit(GameObject g){
+		if(g.getObjectType() == ObjectType.PLAYER)
+			return true;
+		return false;
 	}
 
 }

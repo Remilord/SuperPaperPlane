@@ -14,6 +14,8 @@ public class Portal extends GameObject {
 	private static int post;
 			public Portal(int x,int y, Niveau niveau) {
 				super(x,y, niveau);
+				objectType = ObjectType.BONUS;
+
 				this.objects = objects;
 				rx=new Random();
 				portal=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"portal"+File.separator+"portal0.png");
@@ -52,5 +54,17 @@ public class Portal extends GameObject {
 			@Override
 			public boolean remove(){
 				return getPositionY() < -100;
+			}
+
+			@Override
+			public void whenGetHit(){
+				//Tp vers le suivant
+			}
+
+			@Override
+			public boolean canHit(GameObject g){
+				if(g.getObjectType() == ObjectType.PLAYER)
+					return true;
+				return false;
 			}
 }

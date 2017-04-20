@@ -15,6 +15,8 @@ public class Jagger extends GameObject {
 	private ArrayList<GameObject> objects;
 		public Jagger(int x,int y, Niveau niveau){
 			super(x,y, niveau);
+			objectType = ObjectType.BONUS;
+
 			this.objects = objects;
 			this.rand=new Random();
 			jagger=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"jagger"+File.separator+"jagger0.png");
@@ -75,9 +77,8 @@ public class Jagger extends GameObject {
 			}
 
 			@Override
-			public void onHit(){
+			public void whenGetHit(){
 				int nb = niveau.getAvion().getNumberBottles();
-				niveau.getAvion().setNumberBottles(nb+1);
 				if(nb == 0){
 					if(!niveau.getShootingStar()){
 						System.out.println("Blur needs to be set");
@@ -89,5 +90,15 @@ public class Jagger extends GameObject {
 					niveau.getClavierInsane().setInversed(true);
 					//tj = 0??
 				}
+				niveau.getAvion().setNumberBottles(nb+1);
+				needsToBeRemoved = true;
+			}
+
+
+			@Override
+			public boolean canHit(GameObject g){
+				if(g.getObjectType() == ObjectType.PLAYER)
+					return true;
+				return false;
 			}
 }

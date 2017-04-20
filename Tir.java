@@ -11,6 +11,8 @@ public class Tir extends GameObject {
 			private Niveau niveau;
 			public Tir(int x,int y, Niveau niveau) {
 				super(x, y, niveau);
+				objectType = ObjectType.OFFENSIVE;
+
 				this.niveau = niveau;
 				this.objects = objects;
 				tir=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"denis"+File.separator+"Tir.png");
@@ -39,7 +41,17 @@ public class Tir extends GameObject {
 			}
 
 
+			@Override
+			public void whenGetHit(){
+				
+			}
 
+			@Override
+			public boolean canHit(GameObject g){
+				if(g.getObjectType() == ObjectType.ENEMY)
+					return true;
+				return false;
+			}
 
 
 }

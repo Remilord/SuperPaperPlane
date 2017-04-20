@@ -14,12 +14,16 @@ public class Avion extends GameObject{
   private boolean isShooting = false;
   private boolean isInvincible = false;
   private boolean isLittle = false;
+  private boolean isHighSpeed = false;
+
   private Hitbox hitbox = new Hitbox(this);
   private int nbBottles;
   private int positionAvion; //0 pour bas, 1 pour gauche, 2 pour droite
 
   public Avion(int positionX, int positionY, Niveau niveau){
     super(positionX, positionY, niveau);
+    objectType = ObjectType.PLAYER;
+
     this.niveau = niveau;
     positionAvion = 0;
     nbBottles = 0;
@@ -55,6 +59,10 @@ public class Avion extends GameObject{
     return positionAvion;
   }
 
+  public boolean getIsInvincible(){
+    return isInvincible;
+  }
+
   @Override
   public BufferedImage getImage() {
     return avionImage;
@@ -74,22 +82,30 @@ public class Avion extends GameObject{
 
   @Override
   public void deplacement(int vitesse){
+    int bonusNum = 0;
+    if(isInvincible)
+      bonusNum = 1;
+    else if(isLittle)
+      bonusNum = 3;
+    else if(isHighSpeed)
+      bonusNum = 2;
+
     if(niveau.getNiveauEntreeUtilisateur() == 2){
       if(getPositionX() > niveau.getPosMin()){
         setPositionX(getPositionX()-niveau.getVitesse()+2);
-        setImageAvionActuel((niveau.getBonusEffect()*3)+3);
+        setImageAvionActuel((bonusNum*3)+3);
         positionAvion = 2;
       }
     }
     else if(niveau.getNiveauEntreeUtilisateur() == 1){
       if(getPositionX() < 605){
         setPositionX(getPositionX()+niveau.getVitesse()-2);
-        setImageAvionActuel((niveau.getBonusEffect()*3)+1);
+        setImageAvionActuel((bonusNum*3)+1);
         positionAvion = 1;
       }
     }
     else if(niveau.getEntreeUtilisateur() == 0){
-      setImageAvionActuel((niveau.getBonusEffect()*3)+2);
+      setImageAvionActuel((bonusNum*3)+2);
       positionAvion = 0;
     }
 
@@ -125,12 +141,21 @@ public class Avion extends GameObject{
   }
 
   @Override
-  public void onHit(){
+  public void whenGetHit(){
 
   }
 
   public String toString(){
     return "Avion";
+  }
+
+  @Override
+  public boolean canHit(GameObject g){
+    if(g.getObjectType() != ObjectType.PLAYER
+        && g.getObjectType() != ObjectType.OFFENSIVE){
+      return true;
+    }
+    return false;
   }
 
 }

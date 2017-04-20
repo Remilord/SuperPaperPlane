@@ -35,6 +35,7 @@ public class Niveau extends JPanel{
   private Pattern pattern;
   private boolean insane;
   private JFrame jf;
+  private boolean isDenisAlive = false;
   public int getEntreeUtilisateur(){
     return this.entree_utilisateur;
   }
@@ -84,7 +85,8 @@ public class Niveau extends JPanel{
     backgroundShootingStar = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"NiveauShootingStar.png");
     backgroundBase = loadBufferedImage("res"+File.separator+"image"+File.separator+"fond"+File.separator+"Niveau.png");
     setFocusable(true);
-    addKeyListener(new ClavierInsane(this));
+    clavierInsane = new ClavierInsane(this);
+    addKeyListener(clavierInsane);
     avion = new Avion(50, 50, this);
     addNewObject(avion);
   }
@@ -123,6 +125,10 @@ public class Niveau extends JPanel{
   }
   public int getScore() {
     return this.score/60;
+  }
+
+  public void setIsDenisAlive(boolean b){
+    isDenisAlive = b;
   }
 
   @Override
@@ -164,7 +170,6 @@ public class Niveau extends JPanel{
     Barre barre2 = new Barre(0, 0, this, 1);
     Bonus bonusk = new Bonus(0,0, this);
     Mario mario = new Mario(0,0, this);
-    Denis denis = new Denis(0,650, this);
     Tir tir = new Tir(0,0, this);
     Feu fg = new Feu(0,0, this);
     Feu fd = new Feu(435,0, this);
@@ -211,8 +216,9 @@ public class Niveau extends JPanel{
           ss.play();
         }
         //Si le score est a %5 ajout d'un Dennis
-        if((((this.score/60)%1)==0) && (this.objects.contains(denis)==false)&&((this.score/60)!=0)) {
-          this.addNewObject(denis);
+        if((((this.score/60)%5)==0) && (isDenisAlive==false)&&((this.score/60)!=0)) {
+          System.out.println("Adding Denis");
+          this.addNewObject(new Denis(0, 650, this));
           this.dennisExist = true;
         }
         if((rp.nextInt(900)==0)&&(this.objects.contains(pone)==false)) {
@@ -269,24 +275,24 @@ public class Niveau extends JPanel{
 
         }
 
-        if(this.objects.contains(denis)) {
+        if(isDenisAlive) {
           td++;
           if((td==15)||(td==30)||(td==45)||(td==60)) {
             if(nd==1) {
               Ah ah = new Ah(0,0, this);
               if(!this.objects.contains(ah))
               this.addNewObject(ah);
-              ah.setPositionX(denis.getPositionX());
-              ah.setPositionY(denis.getPositionY());
+              //ah.setPositionX(denis.getPositionX());
+              //ah.setPositionY(denis.getPositionY());
               Son.playTempSound("/res/son/ah.wav");
             }
             nd++;
-            denis.setImageDenisActuel(nd);
+            //denis.setImageDenisActuel(nd);
           }
           if(td==75) {
             nd=0;
             td=0;
-            denis.setImageDenisActuel(nd);
+            //denis.setImageDenisActuel(nd);
           }
         }
         if((vj==5)||(vj==10)||(vj==15)||(vj==20)) {
@@ -316,27 +322,6 @@ public class Niveau extends JPanel{
       objectUpdate(this.objects);
 
 
-      if(insane){
-
-        if(this.objects.contains(tir)) {
-          if((this.objects.contains(denis))&&(this.objects.contains(tir))) {
-            tirh.setBounds(tir.getPositionX(), tir.getPositionY(), 15, 30);
-            denish.setBounds(denis.getPositionX(), denis.getPositionY(), 100, 100);
-          }
-          if(tirh.intersects(denish)) {
-            this.objects.remove(tir);
-          }
-        }
-
-        if(tirh.intersects(denish)) {
-          vd --;
-          tirh.setBounds(0, 0, 0, 0);
-          if(vd==0) {
-            this.objects.remove(denis);
-            this.dennisExist = false;
-          }
-        }
-      }
       /*
       Si l'avion est pas invinble et touche un objet game over
       if(this.bonuseffect!=1) {
@@ -434,10 +419,16 @@ public class Niveau extends JPanel{
     }
 
     avion.createHitbox();
-    for(int i = 1; i < objects.size(); i++){
-        if(avion.getHitbox().intersects(objects.get(i).getHitbox().getBounds2D())){
-          objects.get(i).onHit();
+    for(int i = 0; i < objects.size(); i++){
+      for(int j = 0; j < objects.size(); j++){
+        if(objects.get(i).canHit(objects.get(j))){
+          if(objects.get(i).getHitbox().intersects(
+            objects.get(j).getHitbox().getBounds2D()
+          )){
+            objects.get(j).whenGetHit();
+          }
         }
+      }
     }
 
     this.repaint();
@@ -453,13 +444,15 @@ public class Niveau extends JPanel{
     return shootingStar;
   }
   public void loose(){
-    try{
-      avion.setImageAvionActuel(13);
-      Thread.sleep(250);
-      this.defaite=true;
-    }
-    catch(InterruptedException e){
-      System.err.println("Error when trying to execute loose");
+    if(!avion.getIsInvincible()){
+      try{
+        avion.setImageAvionActuel(13);
+        Thread.sleep(250);
+        this.defaite=true;
+      }
+      catch(InterruptedException e){
+        System.err.println("Error when trying to execute loose");
+      }
     }
   }
 }

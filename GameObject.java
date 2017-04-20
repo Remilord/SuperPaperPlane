@@ -13,12 +13,15 @@ abstract class GameObject extends JComponent{
   protected int hauteur;
   protected BufferedImage img;
   protected final Niveau niveau;
+  protected ObjectType objectType;
+  protected boolean needsToBeRemoved;
   public GameObject(int x, int y, Niveau niveau){
 	  this.setDoubleBuffered(true);
     this.niveau = niveau;
     this.positionY = y;
     this.positionX = x;
-
+    objectType = ObjectType.DECOR;
+    needsToBeRemoved = false;
   }
 
   public int getLargeur(){
@@ -52,16 +55,13 @@ abstract class GameObject extends JComponent{
   }
 
   public boolean remove(){
-    return false;
+    return needsToBeRemoved;
   }
 
   public Niveau getNiveau(){
     return niveau;
   }
 
-  public boolean offensive(){
-    return false;
-  }
 
   public boolean create(){
     return false;
@@ -80,8 +80,28 @@ abstract class GameObject extends JComponent{
   /*polygon.intersects(Rectangle2D)*/
   //Pour avoir un Rectangle2D : getBounds2D
 
-  public void onHit(){
+  public void whenGetHit(){
     niveau.loose();
   }
+
+  public boolean canHit(GameObject g){
+    return false;
+  }
+
+  public ObjectType getObjectType(){
+    return objectType;
+  }
+
+
+
+  public enum ObjectType {
+    DECOR,
+    ENEMY,
+    PLAYER,
+    OFFENSIVE,
+    BONUS;
+  }
+
+
 
 }
