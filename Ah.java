@@ -7,13 +7,14 @@ import java.util.ArrayList;
 
 public class Ah extends GameObject {
 	private BufferedImage ah;
-	private ArrayList<GameObject> objects;
-			public Ah(int x,int y, Niveau niveau) {
+	private EventSpawner eventSpawner;
+			public Ah(int x,int y, Niveau niveau, EventSpawner e) {
 				super(x, y, niveau);
-				this.objects = objects;
+				eventSpawner = e;
 				ah=Niveau.loadBufferedImage("res"+File.separator+"image"+File.separator+"denis"+File.separator+"AH.png");
 				this.largeur=40;
 				this.hauteur=30;
+				Son.playTempSound("/res/son/ah.wav");
 			}
 			@Override
 			public BufferedImage getImage() {
@@ -27,7 +28,10 @@ public class Ah extends GameObject {
 
 			@Override
 			public boolean remove(){
-				if(getPositionY() <= -60)  return true;
+				if(getPositionY() <= -60){
+					eventSpawner.setIsDenisShouting(false);
+					return true;
+				}
 				return false;
 			}
 

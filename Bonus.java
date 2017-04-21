@@ -38,47 +38,15 @@ public class Bonus extends GameObject {
 	  public BufferedImage getImage() {
 	    return bonusactuel;
 	  }
-	public boolean sousEffet(int bde) {
-		if(bde>0) {
-			return true;
-		}
-		return false;
-	}
-	public void setAttributes(int be,int speed,boolean min) {
-		if(be==2) {
-			this.vitesse=12;
-		}else if(be==3) {
-			this.mini=true;
-		}
-	}
+
+
 	public int getVitesseStatus() {
 		return this.vitesse;
 	}
 	public boolean getMiniStatus() {
 		return this.mini;
 	}
-	public void resetBonusStatus() {
-		this.vitesse=6;
-		this.mini=false;
-	}
-	public void resetBonus() {
-        this.etatnum=rand.nextInt(3)+1;;
- 	   this.setImageBonus(this.etatnum);
- 	   this.resetPosition();
-	}
-	public void resetPosition() {
-		this.setPositionY(rand.nextInt(2001)+1000);
-        this.setPositionX(rand.nextInt(571)+70);
-	}
-	public boolean timerBonus(int t) {
-		if(t==600) {
-		    	   this.etatnum=rand.nextInt(3)+1;;
-		    	   this.setImageBonus(this.etatnum);
-		    	   this.resetBonusStatus();
-		    	   return true;
-		}
-		return false;
-	}
+
 	private void setImageBonus(int r) {
 		if(r==1) {
 			this.bonusactuel=this.bonusTras;
@@ -95,8 +63,8 @@ public class Bonus extends GameObject {
 	@Override
 	public void deplacement(int vitesse){
 			this.setPositionY(this.getPositionY()-vitesse);
-			if(getPositionY()<=-50) {
-        resetBonus();
+			if(getPositionY() <= -50) {
+        needsToBeRemoved = true;
       }
 	}
 	@Override
@@ -107,7 +75,7 @@ public class Bonus extends GameObject {
 
 	@Override
 	public void whenGetHit(){
-
+		niveau.getAvion().setIsBonused(true);
 		if(etatnum == 1){
 			niveau.getAvion().setInvincible(true);
 		}

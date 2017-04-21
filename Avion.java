@@ -11,6 +11,7 @@ public class Avion extends GameObject{
   private BufferedImage avionImage;
   private BufferedImage[] PionPlane;
   private Niveau niveau;
+  private boolean isBonused = false;
   private boolean isShooting = false;
   private boolean isInvincible = false;
   private boolean isLittle = false;
@@ -37,6 +38,14 @@ public class Avion extends GameObject{
   }
   public void setImageAvionActuel(int i){
     this.avionImage=PionPlane[i];
+  }
+
+  public void setIsBonused(boolean b){
+    isBonused = b;
+  }
+
+  public boolean getIsBonused(){
+    return isBonused;
   }
 
   public int getNumberBottles(){

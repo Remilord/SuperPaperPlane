@@ -160,20 +160,11 @@ public class Niveau extends JPanel{
     int tss = 0,tj = 0,td = 0,tp = 0; //Timer pour Mario , shooting star , l'effet du jagger , denis brogniart et pour les portails
     int vj=0;
     int ecart = 0; // entier calculant la difference (pour les portails)
-    int vd=3; //vie de denis brogniart
-    int nbouteille=0;
-    boolean mini=false;
-    Random rss = new Random(); //Random pour le shooting star
-    Random rd = new Random();  //Random pour l'apparition de denis
-    Random rp = new Random(); //Random pour l'apparition des portails
-    //this.avion = new Avion(50,50, this);
     Barre barre = new Barre(0, 0, this, 0);
     Barre barre2 = new Barre(0, 0, this, 1);
-    Bonus bonusk = new Bonus(0,0, this);
+    Random rss = new Random();
     Feu fg = new Feu(0,0, this);
     Feu fd = new Feu(435,0, this);
-    Portal pone = new Portal(0,0, this);
-    Portal ptwo = new Portal(0,0, this);
     Son ss = new Son("/res/son/shootingstar.wav");
     Jagger jg = new Jagger(0,0, this);
     pattern = new Pattern();
@@ -182,7 +173,6 @@ public class Niveau extends JPanel{
     barre2.setPositionX(pattern.getPatternX2());
     this.addNewObject(barre);
     this.addNewObject(barre2);
-    this.addNewObject(bonusk);
     this.addNewObject(fg);
     this.addNewObject(fd);
     this.addNewObject(jg);
@@ -198,9 +188,7 @@ public class Niveau extends JPanel{
       entreeUtilisateur = getEntreeUtilisateur();
       long temps_debut_boucle = System.currentTimeMillis();
 
-      if(bonusk.sousEffet(this.bonuseffect)) {
-        this.temps++;
-      }
+
       if(insane && score != 0){
         eventSpawner.calculateEvents();
 
@@ -215,20 +203,8 @@ public class Niveau extends JPanel{
           posmin=-105;
           ss.play();
         }
-        //Si le score est a %5 ajout d'un Dennis
-        if((rp.nextInt(900)==0)&&(this.objects.contains(pone)==false)) {
-          pone = new Portal(0,0,this);
-          ptwo = new Portal(0,0,this);
-          this.addNewObject(pone);
-          this.addNewObject(ptwo);
-          pone.setPositions(1);
-          ptwo.setPositions(2);
-        }
         if(shootingStar) {
           tss++;
-        }
-        if(nbouteille > 0) {
-          tj++;
         }
         if(tss==2000) {
           shootingStar=false;
@@ -241,40 +217,7 @@ public class Niveau extends JPanel{
           tss=0;
           ss.stop();
         }
-        if(tj==2000) {
-          nbouteille=0;
-          this.setFlou(false);
-          barre.setFlou(false);
-          barre2.setFlou(false);
-          fg.setFlou(false);
-          fd.setFlou(false);
-          //this.setInversed(false);
 
-        }
-
-
-
-
-        /*if(isDenisAlive) {
-          td++;
-          if((td==15)||(td==30)||(td==45)||(td==60)) {
-            if(nd==1) {
-              Ah ah = new Ah(0,0, this);
-              if(!this.objects.contains(ah))
-              this.addNewObject(ah);
-              //ah.setPositionX(denis.getPositionX());
-              //ah.setPositionY(denis.getPositionY());
-              Son.playTempSound("/res/son/ah.wav");
-            }
-            nd++;
-            //denis.setImageDenisActuel(nd);
-          }
-          if(td==75) {
-            nd=0;
-            td=0;
-            //denis.setImageDenisActuel(nd);
-          }
-        }*/
         if((vj==5)||(vj==10)||(vj==15)||(vj==20)) {
           nj=nj+1;
           jg.setImageJagger(nj);
@@ -284,46 +227,12 @@ public class Niveau extends JPanel{
           vj=0;
         }
         vj=vj+1;
-        if(this.objects.contains(pone)) {
-          tp++;
-          if((tp==5)||(tp==10)||(tp==15)||(tp==20)||(tp==25)) {
-            np=np+1;
-            pone.setImagePortalActuel(np);
-            ptwo.setImagePortalActuel(np);
-          }
-          if(tp==30) {
-            tp=0;
-            np=0;
-          }
-        }
+
       }
 
       //---------------------DEPLACEMENT--------------------------
       objectUpdate(this.objects);
 
-
-      /*
-      Si l'avion est pas invinble et touche un objet game over
-      if(this.bonuseffect!=1) {
-        if(hitbox.detectCollision(objects)==1) {
-          ss.stop();
-          loose();
-        }
-      }
-      */
-
-      /*Si rencontre un bonus
-      if(hitbox.detectCollision(objects)==2) {
-        this.bonuseffect=bonusk.getEtatNum();
-        bonusk.resetBonusStatus();
-        bonusk.setAttributes(this.bonuseffect,this.vitesse,mini);
-        this.vitesse=bonusk.getVitesseStatus();
-        mini=bonusk.getMiniStatus();
-        this.temps=0;
-        bonusk.resetPosition();
-      }
-
-      */
 
       /*Si c'est du jagger
       if(hitbox.detectCollision(objects)==3) {
@@ -342,32 +251,6 @@ public class Niveau extends JPanel{
           tj=0;
         }
       }
-      */
-
-      /*Si c'est un portail
-      if(hitbox.detectCollision(objects)==4) {
-        ecart = ptwo.getPositionY() - avion.getPositionY();
-        ptwo.setPositionY(avion.getPositionY()-38);
-        avion.setPositionX(ptwo.getPositionX()+20);
-        barre.setPositionY(barre.getPositionY()-ecart);
-        barre2.setPositionY(barre2.getPositionY()-ecart);
-        bonusk.setPositionY(bonusk.getPositionY()-ecart);
-        if(this.objects.contains(jg)) {
-          jg.setPositionY(jg.getPositionY()-ecart);
-        }
-        this.objects.remove(pone);
-        this.objects.remove(ptwo);
-      }
-      */
-
-      /* Wtf?
-      if(bonusk.timerBonus(this.temps)) {
-        this.vitesse=bonusk.getVitesseStatus();
-        mini=bonusk.getMiniStatus();
-        this.bonuseffect=0;
-        this.temps=0;
-      }
-
       */
 
       long temps_consomme = System.currentTimeMillis() - temps_debut_boucle;
@@ -401,7 +284,7 @@ public class Niveau extends JPanel{
     avion.createHitbox();
     for(int i = 0; i < objects.size(); i++){
       for(int j = 0; j < objects.size(); j++){
-        if(objects.get(i).canHit(objects.get(j))){
+        if(objects.get(i).canHit(objects.get(j)) && i != j){
           if(objects.get(i).getHitbox().intersects(
             objects.get(j).getHitbox().getBounds2D()
           )){
