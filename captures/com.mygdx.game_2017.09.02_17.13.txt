@@ -1,0 +1,47 @@
+Applications Memory Usage (kB):
+Uptime: 625776 Realtime: 625776
+
+** MEMINFO in pid 6157 [com.mygdx.game] **
+                   Pss  Private  Private  Swapped     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------
+  Native Heap    11081    11000        0        0    26880    25334     1545
+  Dalvik Heap    11020    10980        0        0    11522    10725      797
+ Dalvik Other      837      836        0        0                           
+        Stack      160      160        0        0                           
+       Ashmem        2        0        0        0                           
+    Other dev        4        0        4        0                           
+     .so mmap     1268      120      180        0                           
+    .apk mmap      124        0        4        0                           
+    .dex mmap     3244        4     3240        0                           
+    .oat mmap     1385        0      220        0                           
+    .art mmap     1035      620        0        0                           
+   Other mmap       13        8        0        0                           
+      Unknown      145      144        0        0                           
+        TOTAL    30318    23872     3648        0    38402    36059     2342
+ 
+ App Summary
+                       Pss(KB)
+                        ------
+           Java Heap:    11600
+         Native Heap:    11000
+                Code:     3768
+               Stack:      160
+            Graphics:        0
+       Private Other:      992
+              System:     2798
+ 
+               TOTAL:    30318      TOTAL SWAP (KB):        0
+ 
+ Objects
+               Views:        5         ViewRootImpl:        1
+         AppContexts:        2           Activities:        1
+              Assets:        2        AssetManagers:        2
+       Local Binders:       11        Proxy Binders:       15
+       Parcel memory:        3         Parcel count:       15
+    Death Recipients:        0      OpenSSL Sockets:        0
+ 
+ SQL
+         MEMORY_USED:        0
+  PAGECACHE_OVERFLOW:        0          MALLOC_SIZE:        0
+ 
