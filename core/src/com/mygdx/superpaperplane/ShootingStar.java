@@ -17,7 +17,7 @@ public class ShootingStar extends GameObject {
 	public ShootingStar(int x, int y, Niveau niveau, EventSpawner e) {
 		super(x, y, niveau);
 
-		image = com.mygdx.superpaperplane.ImageBanque.getCaseImage(16);
+		image = com.mygdx.superpaperplane.ImageBanque.getCaseImage(19);
 		niveau.setBackground(image);
 		objectType = ObjectType.FANTOM;
 		this.e = e;
@@ -70,7 +70,7 @@ public class ShootingStar extends GameObject {
 			}
 		}
 		time++;
-		if (time == 600) {
+		if (time == 999) {
 			e.setShootingStar(false);
 			needsToBeRemoved = true;
 		}

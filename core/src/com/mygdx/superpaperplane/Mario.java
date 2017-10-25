@@ -20,7 +20,7 @@ public class Mario extends GameObject  {
 			this.music = Gdx.audio.newMusic(Gdx.files.internal("son/grillepain.ogg"));
 		} else {
 			this.music = Gdx.audio.newMusic(Gdx.files.internal("son/Non.ogg"));
-			mario = com.mygdx.superpaperplane.ImageBanque.getCaseImage(21);
+			mario = com.mygdx.superpaperplane.ImageBanque.getCaseImage(25);
 			actualImageNumber = 0;
 			setImageMarioActuel(actualImageNumber);
 		}
@@ -59,7 +59,7 @@ public class Mario extends GameObject  {
 
 
 	public void setImageMarioActuel(int n){
-		this.mario = com.mygdx.superpaperplane.ImageBanque.getCaseImage(21+n);
+		this.mario = com.mygdx.superpaperplane.ImageBanque.getCaseImage(25+n);
 	}
 
 	@Override

@@ -16,7 +16,7 @@ public class Barre extends GameObject {
 		this.positionY = - 80;
 		this.largeur = 600;
 		this.hauteur = 80;
-		image = com.mygdx.superpaperplane.ImageBanque.getCaseImage(14);
+		image = com.mygdx.superpaperplane.ImageBanque.getCaseImage(17);
 	}
 	public void dispose(){
 
@@ -25,9 +25,9 @@ public class Barre extends GameObject {
 	@Override
 	public Texture getImage() {
 		if (niveau.isShootingStar()) {
-			return com.mygdx.superpaperplane.ImageBanque.getCaseImage(17);
+			return com.mygdx.superpaperplane.ImageBanque.getCaseImage(20);
 		} else {
-			return com.mygdx.superpaperplane.ImageBanque.getCaseImage(14);
+			return com.mygdx.superpaperplane.ImageBanque.getCaseImage(17);
 		}
 	}
 

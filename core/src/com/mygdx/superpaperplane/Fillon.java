@@ -17,7 +17,7 @@ public class Fillon extends GameObject {
 	public Fillon(int x, int y, Niveau niveau, EventSpawner e) {
 		super(x, y, niveau);
 		objectType = ObjectType.BONUS;
-		this.fillon = com.mygdx.superpaperplane.ImageBanque.getCaseImage(41);
+		this.fillon = com.mygdx.superpaperplane.ImageBanque.getCaseImage(45);
 		this.rand = new Random();
 		this.positionX = -350 + rand.nextInt(900);
 		this.positionY = -80 ;
@@ -35,7 +35,7 @@ public class Fillon extends GameObject {
 	}
 
 	public void setImageFillonActuel(int n) {
-		this.fillon = com.mygdx.superpaperplane.ImageBanque.getCaseImage(41 + n);
+		this.fillon = com.mygdx.superpaperplane.ImageBanque.getCaseImage(45 + n);
 	}
 
 	public Texture getImage() {

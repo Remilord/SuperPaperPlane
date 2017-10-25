@@ -68,7 +68,7 @@ public class EventSpawner{
         com.mygdx.superpaperplane.Denis denis = new com.mygdx.superpaperplane.Denis(0, 70, niveau, this);
         niveau.addNewObject(denis);
       }
-      if(score % 3 == 0 && !niveau.getAvion().getIsBonused() && shouldThisBeInsane(2)){
+      if(score % 3 == 0 && !niveau.getAvion().getIsBonused() && shouldThisBeInsane(3)){
         Bonus bonus = new Bonus(random.nextInt(5)*20+65, -20, niveau);
         niveau.addNewObject(bonus);
       }

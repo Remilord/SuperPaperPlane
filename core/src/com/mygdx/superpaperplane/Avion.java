@@ -17,6 +17,7 @@ public class Avion extends GameObject {
 	private boolean isInvincible = false;
 	private boolean isLittle = false;
 	private boolean isHighSpeed = false;
+	private boolean isMaxScore = false;
 	private Hitbox hitboxCreator = new Hitbox(this);
 	private Polygon hitbox;
 	private int nbBottles;
@@ -28,7 +29,9 @@ public class Avion extends GameObject {
 	private int timerInvincible = 0;
 	private int timerLittle = 0;
 	private int timerHightSpeed = 0;
+	private int timerMaxScore = 0;
 	private int timerBottle = 0;
+
 	public Avion(int positionX, int positionY, Niveau niveau, EventSpawner e) {
 		super(positionX, positionY, niveau);
 		objectType = ObjectType.PLAYER;
@@ -83,7 +86,8 @@ public class Avion extends GameObject {
 		return isHighSpeed;
 	}
 	public void setHighSpeed(boolean b){isHighSpeed = b;}
-
+	public void setMaxScore(boolean b) { isMaxScore = b;}
+	public boolean getIsMaxScore() {return isMaxScore;}
 	public boolean getIsLittle() {
 		return isLittle;
 	}
@@ -143,7 +147,7 @@ public class Avion extends GameObject {
 		}
 		if(isLittle){
 			timerLittle++;
-			if(timerLittle == 350){
+			if(timerLittle == 500){
 				isLittle = false;
 				isBonused = false;
 				timerLittle = 0;
@@ -151,16 +155,25 @@ public class Avion extends GameObject {
 		}
 		if(isHighSpeed){
 			timerHightSpeed++;
-			if(timerHightSpeed == 350){
+			if(timerHightSpeed == 500){
 				isHighSpeed = false;
 				isBonused = false;
 				timerHightSpeed = 0;
 			}
 		}
+		if(isMaxScore){
+			timerMaxScore++;
+			if(timerMaxScore == 300){
+				isMaxScore = false;
+				isBonused = false;
+				timerMaxScore = 0;
+			}
+		}
 		if(nbBottles > 0){
 			timerBottle++;
-			if(timerBottle == 350){
+			if(timerBottle == 500){
 				nbBottles--;
+				timerBottle=0;
 			}
 		}
 		
@@ -178,6 +191,8 @@ public class Avion extends GameObject {
 			bonusNum = 3;
 		else if (isHighSpeed)
 			bonusNum = 2;
+		else if (isMaxScore)
+			bonusNum = 4;
 		if (Gdx.app.getType() != Application.ApplicationType.Android) {
 			if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 				position = 1;
@@ -252,7 +267,7 @@ public class Avion extends GameObject {
 		}
 			
 		if (nombreDeViesRestantes == 0){
-			setImageAvionActuel(13);
+			setImageAvionActuel(16);
 			niveau.setDefaite(true);
 		}
 	}

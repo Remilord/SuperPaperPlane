@@ -74,7 +74,7 @@ public class Niveau extends Game implements Screen {
 		shapeRenderer = new ShapeRenderer();
 		com.mygdx.superpaperplane.ImageBanque.InitialiserImageBanque();
 		/* On charge les images de base du niveau */
-		background = com.mygdx.superpaperplane.ImageBanque.getCaseImage(15);
+		background = com.mygdx.superpaperplane.ImageBanque.getCaseImage(18);
 		hearth = loadBufferedImage("image" + File.separator + "coeur.png");
 		pattern = new Pattern();
 		pattern.generatePattern();
@@ -139,10 +139,13 @@ public class Niveau extends Game implements Screen {
 
 		if (!isPlaying) {
 			isPlaying = true;
-			if (com.mygdx.superpaperplane.ImageBanque.getValue() == 3)
+			if (com.mygdx.superpaperplane.ImageBanque.getValue() == 3) {
 				music = Gdx.audio.newMusic(Gdx.files.internal("son/weed.ogg"));
-			else
+			} else if (com.mygdx.superpaperplane.ImageBanque.getValue() == 4) {
+				music = Gdx.audio.newMusic(Gdx.files.internal("son/albatraoz.ogg"));
+			} else {
 				music = Gdx.audio.newMusic(Gdx.files.internal("son/upset.ogg"));
+		}
 			music.isLooping();
 			music.play();
 		}
@@ -152,9 +155,16 @@ public class Niveau extends Game implements Screen {
 			vitesse = 12;
 		else
 			vitesse = 8;
+		if((actualFrame == 30 || actualFrame == 60)&&(avion.getIsHighSpeed())) {
+			score++;
+		}
 		if (actualFrame == 60) {
 			actualFrame = 0;
-			score++;
+			if(avion.getIsMaxScore()) {
+				score=score+2;
+			}else if(!avion.getIsHighSpeed()) {
+				score++;
+			}
 		}
 		actualFrame++;
 
@@ -305,7 +315,11 @@ public class Niveau extends Game implements Screen {
 				 getActualFrame() + "", 50, 800);
 
 		*/
-		bitmapFont.setColor(Color.WHITE);
+		if(avion.getIsMaxScore()) {
+			bitmapFont.setColor(Color.RED);
+		}else {
+			bitmapFont.setColor(Color.WHITE);
+		}
 		String scoreString = Integer.toString(score);
 		int widthString = (int) bitmapFont.getSpaceWidth() * scoreString.length();
 
@@ -315,6 +329,7 @@ public class Niveau extends Game implements Screen {
 
 			widthString = Gdx.app.getGraphics().getWidth() / 2 - widthString * 2;
 			bitmapFont.draw(batch, scoreString, widthString * 2, 120);
+			bitmapFont.setColor(Color.WHITE);
 			if (insane) {
 
 				if (actualFrame < 40) {
@@ -334,6 +349,7 @@ public class Niveau extends Game implements Screen {
 		} else { //Sur Android
 			widthString = (int) bitmapFont.getSpaceWidth() * scoreString.length();
 			bitmapFont.draw(batch, scoreString, 500 / 2 - widthString * 2, 120);
+			bitmapFont.setColor(Color.WHITE);
 			if (insane) {
 				if (actualFrame < 40) {
 					widthString = (int) bitmapFont.getSpaceWidth() * subbar.getActualSentence().length();
@@ -351,7 +367,7 @@ public class Niveau extends Game implements Screen {
 	}
 
 	public void refreshBackground() {
-		background = com.mygdx.superpaperplane.ImageBanque.getCaseImage(15);
+		background = com.mygdx.superpaperplane.ImageBanque.getCaseImage(18);
 	}
 
 	public void activeListener() {
@@ -459,7 +475,7 @@ public class Niveau extends Game implements Screen {
 	}
 	public void loose() {
 		if (!avion.getIsInvincible()) {
-			avion.setImageAvionActuel(13);
+			avion.setImageAvionActuel(16);
 			int size = objects.size();
 			for (int i = 0; i < size; i++) {
 				objects.get(i).dispose();

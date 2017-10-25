@@ -9,9 +9,9 @@ public class Feu extends GameObject {
 		this.largeur = 45;
 		this.hauteur = 800;
 		if (this.getPositionX() == 0) {
-			image = ImageBanque.getCaseImage(27);
+			image = ImageBanque.getCaseImage(31);
 		} else {
-			image = ImageBanque.getCaseImage(26);
+			image = ImageBanque.getCaseImage(30);
 		}
 		eteint = false;
 	}
@@ -31,9 +31,9 @@ public class Feu extends GameObject {
 	public void allumerfeu() {
 		eteint = false;
 		if (this.getPositionX() == 0) {
-			image = ImageBanque.getCaseImage(27);
+			image = ImageBanque.getCaseImage(31);
 		} else {
-			image = ImageBanque.getCaseImage(26);
+			image = ImageBanque.getCaseImage(30);
 		}
 	}
 	@Override

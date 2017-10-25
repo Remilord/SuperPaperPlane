@@ -109,7 +109,9 @@ public class Menu implements Screen {
 				com.mygdx.superpaperplane.ImageBanque.setValue(2);
 			} else if (st.equals("Ce genre de bose")) {
 				com.mygdx.superpaperplane.ImageBanque.setValue(3);
-			} else {
+			}else if(st.equals("I'm an Albatraoz")) {
+				com.mygdx.superpaperplane.ImageBanque.setValue(4);
+		}else {
 				com.mygdx.superpaperplane.ImageBanque.setValue(0);
 			}
 			scen.clear();

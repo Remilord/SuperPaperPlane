@@ -14,7 +14,7 @@ public class Ah extends GameObject {
 		this.largeur = 40;
 		this.hauteur = 30;
 		ah.play();
-		image = ImageBanque.getCaseImage(40);
+		image = ImageBanque.getCaseImage(44);
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class Jagger extends GameObject {
 		super(x, y, niveau);
 		objectType = ObjectType.BONUS;
 		this.eventSpawner = eventSpawner;
-		this.jagger = ImageBanque.getCaseImage(28);
+		this.jagger = ImageBanque.getCaseImage(32);
 		this.rand = new Random();
 		this.positionX = 500 + rand.nextInt(50);
 		this.positionY = -80 - rand.nextInt(50);
@@ -37,7 +37,7 @@ public class Jagger extends GameObject {
 	}
 
 	public void setImageJagger(int n) {
-		this.jagger = ImageBanque.getCaseImage(28 + n);
+		this.jagger = ImageBanque.getCaseImage(32 + n);
 	}
 
 	public Texture getImage() {

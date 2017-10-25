@@ -17,11 +17,11 @@ public class Bonus extends GameObject {
 		objectType = ObjectType.BONUS;
 		needsToBeRemoved = false;
 		this.rand = new Random();
-		this.positionX = 280 + (int) (Math.random() * ((400 - 280) + 1));
+		this.positionX = 150 + (int) (Math.random() * ((400 - 280) + 1));
 		this.positionY = -50;
 		this.largeur = 50;
 		this.hauteur = 50;
-		this.etatnum = rand.nextInt(3) + 1;
+		this.etatnum = rand.nextInt(4) + 1;
 		this.setImageBonus(this.etatnum);
 		this.vitesse = niveau.getVitesse() + 4;
 		
@@ -43,11 +43,13 @@ public class Bonus extends GameObject {
 
 	private void setImageBonus(int r) {
 		if (r == 1) {
-			this.bonusactuel = ImageBanque.getCaseImage(18);
+			this.bonusactuel = ImageBanque.getCaseImage(21);
 		} else if (r == 2) {
-			this.bonusactuel = ImageBanque.getCaseImage(19);
-		} else {
-			this.bonusactuel = ImageBanque.getCaseImage(20);
+			this.bonusactuel = ImageBanque.getCaseImage(22);
+		} else if(r==3) {
+			this.bonusactuel = ImageBanque.getCaseImage(23);
+		}else {
+			this.bonusactuel = ImageBanque.getCaseImage(24);
 		}
 	}
 
@@ -77,9 +79,11 @@ public class Bonus extends GameObject {
 		} else if (etatnum == 2) {
 			niveau.setVitesse(12);
 			niveau.getAvion().setHighSpeed(true);
-		} else
+		} else if(etatnum==3) {
 			niveau.getAvion().setLittle(true);
-
+		}else {
+			niveau.getAvion().setMaxScore(true);
+		}
 		needsToBeRemoved = true;
 	}
 

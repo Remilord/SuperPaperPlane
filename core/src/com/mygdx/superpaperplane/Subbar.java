@@ -23,7 +23,6 @@ public class Subbar {
 			sentences.add("404");
 			sentences.add("AH !");
 			sentences.add("DON'T EVEN TRY");
-			sentences.add("U SUCK");
 		}
 
 		else{

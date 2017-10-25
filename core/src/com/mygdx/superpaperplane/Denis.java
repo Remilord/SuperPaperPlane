@@ -21,7 +21,7 @@ public class Denis extends com.mygdx.superpaperplane.GameObject {
 		e.setIsDenis(true);
 		timer = 0;
 		actualImageNumber = 0;
-		denis = com.mygdx.superpaperplane.ImageBanque.getCaseImage(33);
+		denis = com.mygdx.superpaperplane.ImageBanque.getCaseImage(37);
 		this.largeur = 100;
 		this.hauteur = 100;
 		this.hp = 3;
@@ -31,7 +31,7 @@ public class Denis extends com.mygdx.superpaperplane.GameObject {
 		denis.dispose();
 	}
 	public void setImageDenisActuel(int n) {
-		this.denis = com.mygdx.superpaperplane.ImageBanque.getCaseImage(33 + n);
+		this.denis = com.mygdx.superpaperplane.ImageBanque.getCaseImage(37 + n);
 	}
 
 	@Override

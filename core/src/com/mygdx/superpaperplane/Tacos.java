@@ -10,7 +10,7 @@ public class Tacos extends com.mygdx.superpaperplane.GameObject {
     public Tacos(int x, int y, Niveau niveau) {
         super(x, y, niveau);
         objectType = ObjectType.BONUS;
-        this.tacos = com.mygdx.superpaperplane.ImageBanque.getCaseImage(47);
+        this.tacos = com.mygdx.superpaperplane.ImageBanque.getCaseImage(51);
         this.rand = new Random();
         this.positionX = rand.nextInt(350)+50;
         this.positionY = -80 - rand.nextInt(50);

@@ -14,7 +14,7 @@ public class Tir extends com.mygdx.superpaperplane.GameObject {
 		this.hauteur = 30;
 		this.eventSpawner = eventSpawner;
 		this.niveau = niveau;
-		image = com.mygdx.superpaperplane.ImageBanque.getCaseImage(39);
+		image = com.mygdx.superpaperplane.ImageBanque.getCaseImage(43);
 	}
 	@Override
 	public void dispose(){
