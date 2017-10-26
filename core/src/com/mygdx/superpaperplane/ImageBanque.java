@@ -13,7 +13,7 @@ public class ImageBanque {
 		flou = false;
 		tabimage = new Texture[57];
 		tabimageflou = new Texture[57];
-		for (int a = 1; a < 52; a++) {
+		for (int a = 1; a < 57; a++) {
 			if (a <= 18) {
 				tabimage[a] = Niveau.loadBufferedImage("image/normal/image" + value + a + ".png");
 				tabimageflou[a] = Niveau.loadBufferedImage(

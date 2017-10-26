@@ -19,8 +19,8 @@ public class Fillon extends GameObject {
 		objectType = ObjectType.BONUS;
 		this.fillon = com.mygdx.superpaperplane.ImageBanque.getCaseImage(45);
 		this.rand = new Random();
-		this.positionX = -350 + rand.nextInt(900);
-		this.positionY = -80 ;
+		this.positionX = x;
+		this.positionY = y ;
 		this.actualImageNumber = 0;
 		this.hauteur = 150;
 		this.largeur = 125;

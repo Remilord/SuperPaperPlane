@@ -81,7 +81,7 @@ public class Menu implements Screen {
 				this.game.refreshBackground();
 			}
 			this.game.setScreen(this.game);
-			this.game.setInsane(false);
+			this.game.addFire();
 			this.game.activeListener();
 		} else if (Gdx.input.getY() > Gdx.app.getGraphics().getHeight() / 1.5
 				&& Gdx.input.getY() < Gdx.app.getGraphics().getHeight() / 1.25 && Gdx.input.justTouched()

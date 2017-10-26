@@ -2,6 +2,7 @@ package com.mygdx.superpaperplane;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import java.util.Random;
 
 public class ShootingStar extends GameObject {
 	/**
@@ -14,9 +15,10 @@ public class ShootingStar extends GameObject {
 	private Music shootingStarMusic = Gdx.audio.newMusic(Gdx.files.internal("son/shootingstar.ogg"));
 	private int time = 0;
 	private boolean pluie = false;
+	private Random rand;
 	public ShootingStar(int x, int y, Niveau niveau, EventSpawner e) {
 		super(x, y, niveau);
-
+		rand = new Random();
 		image = com.mygdx.superpaperplane.ImageBanque.getCaseImage(19);
 		niveau.setBackground(image);
 		objectType = ObjectType.FANTOM;
@@ -56,7 +58,7 @@ public class ShootingStar extends GameObject {
 
 	@Override
 	public GameObject createGameObject() {
-		return new Fillon(0, 0, niveau, e);
+		return new Fillon(-350 + rand.nextInt(900), -80, niveau, e);
 	}
 
 	@Override
