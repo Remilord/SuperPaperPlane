@@ -14,7 +14,7 @@ public class Fillon extends GameObject {
 	private int timer;
 	private int actualImageNumber;
 
-	public Fillon(int x, int y, Niveau niveau, EventSpawner e) {
+	public Fillon(int x, int y, Niveau niveau) {
 		super(x, y, niveau);
 		objectType = ObjectType.BONUS;
 		this.fillon = com.mygdx.superpaperplane.ImageBanque.getCaseImage(45);

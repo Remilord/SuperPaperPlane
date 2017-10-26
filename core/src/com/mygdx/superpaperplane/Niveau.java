@@ -282,6 +282,9 @@ public class Niveau extends Game implements Screen {
 			this.score = this.score - 3;
 		}
 	}
+	public void gainScore() {
+			this.score = this.score+2;
+	}
 
 	public int getScore() {
 		return this.score;

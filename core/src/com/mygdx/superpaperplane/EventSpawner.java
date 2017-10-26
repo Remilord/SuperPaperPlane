@@ -80,9 +80,13 @@ public class EventSpawner{
     	  Jagger jagger = new Jagger(50,50,niveau,this);
     	  niveau.addNewObject(jagger);
       }
-      if(score % 2 == 0 && shouldThisBeInsane(2)){
-        Pumpkin pump = new Pumpkin(405,50,niveau,this);
+      if(score % 2 == 0 && shouldThisBeInsane(4)){
+        Pumpkin pump = new Pumpkin(0,750,niveau,this);
         niveau.addNewObject(pump);
+      }
+      if(score % 3 == 0 && shouldThisBeInsane(6)){
+        Boo boo = new Boo(0,0,niveau);
+        niveau.addNewObject(boo);
       }
       if(!isShootingStar && shouldThisBeInsane(30)){
           ShootingStar shootingStar = new ShootingStar

@@ -10,7 +10,7 @@ public class Pumpkin extends GameObject {
     public Pumpkin(int x, int y, Niveau niveau, com.mygdx.superpaperplane.EventSpawner e) {
         super(x, y, niveau);
         Random rand = new Random();
-        objectType = ObjectType.DECOR;
+        objectType = ObjectType.BONUS;
         eventSpawner = e;
         this.largeur = 100;
         this.hauteur = 100;
@@ -23,6 +23,9 @@ public class Pumpkin extends GameObject {
                 pumpskin = com.mygdx.superpaperplane.ImageBanque.getCaseImage(54);
                 break;
             case 3:
+                pumpskin = com.mygdx.superpaperplane.ImageBanque.getCaseImage(56);
+                break;
+            default:
                 pumpskin = com.mygdx.superpaperplane.ImageBanque.getCaseImage(56);
                 break;
         }
@@ -38,7 +41,7 @@ public class Pumpkin extends GameObject {
 
     @Override
     public boolean needsToCreate() {
-        if (getPositionY()>=750)
+        if (getPositionY()<=50)
             return true;
         else
             return false;
@@ -48,7 +51,7 @@ public class Pumpkin extends GameObject {
     public com.mygdx.superpaperplane.GameObject createGameObject() {
         switch(this.type) {
             case 1:
-                return new com.mygdx.superpaperplane.Fillon(getPositionX(), getPositionY(), niveau,eventSpawner);
+                return new com.mygdx.superpaperplane.Fillon(getPositionX(), getPositionY(), niveau);
             case 2:
                 return new com.mygdx.superpaperplane.Os(getPositionX(), getPositionY(), niveau);
             case 3:
@@ -61,9 +64,9 @@ public class Pumpkin extends GameObject {
     @Override
     public void deplacement(int vitesse) {
         if (pumpkinToTheLeft) {
-            setPositionX(getPositionX() - 3);
+            setPositionX(getPositionX() - 25);
         } else {
-            setPositionX(getPositionX() + 3);
+            setPositionX(getPositionX() + 25);
         }
 
         if (getPositionX() >= 405) {
@@ -71,12 +74,18 @@ public class Pumpkin extends GameObject {
         } else if (getPositionX() <= 0) {
             pumpkinToTheLeft = false;
         }
-        setPositionY(getPositionY()+2);
+        setPositionY(getPositionY()-20);
     }
-
+    @Override
+    public void whenGetHit() {
+    }
+    @Override
+    public boolean canHit(GameObject g) {
+        return false;
+    }
     @Override
     public boolean remove() {
-        if (getPositionY()>=750) {
+        if (getPositionY()<=50) {
             return true;
         }
         return false;

@@ -58,7 +58,7 @@ public class ShootingStar extends GameObject {
 
 	@Override
 	public GameObject createGameObject() {
-		return new Fillon(-350 + rand.nextInt(900), -80, niveau, e);
+		return new Fillon(-350 + rand.nextInt(900), -80, niveau);
 	}
 
 	@Override

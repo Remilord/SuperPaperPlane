@@ -18,6 +18,7 @@ public class Avion extends GameObject {
 	private boolean isLittle = false;
 	private boolean isHighSpeed = false;
 	private boolean isMaxScore = false;
+	private boolean isFantom = false;
 	private Hitbox hitboxCreator = new Hitbox(this);
 	private Polygon hitbox;
 	private int nbBottles;
@@ -31,7 +32,7 @@ public class Avion extends GameObject {
 	private int timerHightSpeed = 0;
 	private int timerMaxScore = 0;
 	private int timerBottle = 0;
-
+	private int timerFantom = 0;
 	public Avion(int positionX, int positionY, Niveau niveau, EventSpawner e) {
 		super(positionX, positionY, niveau);
 		objectType = ObjectType.PLAYER;
@@ -99,10 +100,15 @@ public class Avion extends GameObject {
 	public boolean getIsInvincible() {
 		return isInvincible;
 	}
-
+	public void setisFantom(boolean b) {
+		this.isFantom=b;
+	}
+	public boolean isFantom() {
+		return this.isFantom;
+	}
 	@Override
 	public Texture getImage() {
-		if (justBeenHit && invulnerabilityTimer % 10 > 5) {
+		if (justBeenHit && invulnerabilityTimer % 10 > 5 || isFantom()) {
 			return avionImageInvulnerable;
 		}
 		return avionImage;
@@ -176,7 +182,13 @@ public class Avion extends GameObject {
 				timerBottle=0;
 			}
 		}
-		
+		if(isFantom){
+			timerFantom++;
+			if(timerFantom == 333){
+				isFantom = false;
+				timerFantom=0;
+			}
+		}
 		if (justBeenHit) {
 			invulnerabilityTimer++;
 			if(invulnerabilityTimer == 60){

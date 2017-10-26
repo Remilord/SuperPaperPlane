@@ -1,43 +1,44 @@
 package com.mygdx.superpaperplane;
 
+
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.Random;
 
-
-public class Bonbon extends GameObject {
-    private Texture bonbon;
+public class Boo extends GameObject {
+    private Texture boo;
     private Random rand;
-    public Bonbon(int x, int y, Niveau niveau) {
+    public Boo(int x, int y, Niveau niveau) {
         super(x, y, niveau);
-        objectType = ObjectType.BONUS;
-        this.bonbon = com.mygdx.superpaperplane.ImageBanque.getCaseImage(53);
-        this.hauteur = 42;
-        this.largeur = 41;
+        objectType = ObjectType.ENEMY;
+        this.boo = com.mygdx.superpaperplane.ImageBanque.getCaseImage(57);
+        this.rand = new Random();
+        this.positionX = 0;
+        this.positionY = 750 - rand.nextInt(600);
+        this.hauteur = 75;
+        this.largeur = 75;
     }
     @Override
     public void dispose(){
-        bonbon.dispose();
+        boo.dispose();
     }
 
     public Texture getImage() {
-        return this.bonbon;
+        return this.boo;
     }
 
 
     @Override
     public void deplacement(int vitesse) {
-        setPositionY(getPositionY() + 15);
-        setPositionX(getPositionX() + 5);
-        if (getPositionY() >=850 || getPositionX()<=0) {
+        setPositionX(getPositionX() + (vitesse+1));
+        if (getPositionX() >= 500) {
             this.needsToBeRemoved=true;
         }
     }
 
     @Override
     public void whenGetHit() {
-        niveau.gainScore();
-        needsToBeRemoved = true;
+       niveau.getAvion().setisFantom(true);
     }
 
     @Override
@@ -47,3 +48,5 @@ public class Bonbon extends GameObject {
         return false;
     }
 }
+
+

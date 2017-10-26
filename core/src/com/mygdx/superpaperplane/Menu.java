@@ -40,6 +40,7 @@ public class Menu implements Screen {
 		camera = new OrthographicCamera(500, 800);
 		camera.position.set(500 / 2, 800 / 2, 0);
 		txt = new TextField("Code", this.sk);
+
 	}
 
 	@Override
