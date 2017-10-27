@@ -11,9 +11,9 @@ public class ImageBanque {
 
 	public static void InitialiserImageBanque() {
 		flou = false;
-		tabimage = new Texture[58];
-		tabimageflou = new Texture[58];
-		for (int a = 1; a < 58; a++) {
+		tabimage = new Texture[60];
+		tabimageflou = new Texture[60];
+		for (int a = 1; a < 60; a++) {
 			if (a <= 18) {
 				tabimage[a] = Niveau.loadBufferedImage("image/normal/image" + value + a + ".png");
 				tabimageflou[a] = Niveau.loadBufferedImage(

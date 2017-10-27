@@ -13,7 +13,8 @@ public class Fillon extends GameObject {
 	private Random rand;
 	private int timer;
 	private int actualImageNumber;
-
+	private int ydeplacement;
+	private Random randpositiony;
 	public Fillon(int x, int y, Niveau niveau) {
 		super(x, y, niveau);
 		objectType = ObjectType.BONUS;
@@ -24,6 +25,8 @@ public class Fillon extends GameObject {
 		this.actualImageNumber = 0;
 		this.hauteur = 150;
 		this.largeur = 125;
+		randpositiony = new Random();
+		ydeplacement = randpositiony.nextInt(15)+1;
 	}
 	@Override
 	public void dispose(){
@@ -60,7 +63,8 @@ public class Fillon extends GameObject {
 			actualImageNumber++;
 			setImageFillonActuel(actualImageNumber);
 		}
-		setPositionY(getPositionY() + (vitesse + 5));
+
+		setPositionY(getPositionY() + ydeplacement+vitesse);
 		setPositionX(getPositionX() + 3);
 		if ((getPositionX() <= 0 - 125) || (getPositionY() <= 0 - 150)) {
 			resetPosition();

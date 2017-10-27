@@ -144,7 +144,7 @@ public class Niveau extends Game implements Screen {
 			} else if (com.mygdx.superpaperplane.ImageBanque.getValue() == 4) {
 				music = Gdx.audio.newMusic(Gdx.files.internal("son/albatraoz.ogg"));
 			} else {
-				music = Gdx.audio.newMusic(Gdx.files.internal("son/upset.ogg"));
+				music = Gdx.audio.newMusic(Gdx.files.internal("son/ts.ogg"));
 		}
 			music.isLooping();
 			music.play();
@@ -283,7 +283,7 @@ public class Niveau extends Game implements Screen {
 		}
 	}
 	public void gainScore() {
-			this.score = this.score+2;
+			this.score = (avion.getIsMaxScore()) ? this.score+4 : this.score+2;
 	}
 
 	public int getScore() {

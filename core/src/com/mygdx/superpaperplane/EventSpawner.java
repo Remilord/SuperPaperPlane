@@ -72,7 +72,7 @@ public class EventSpawner{
         Bonus bonus = new Bonus(random.nextInt(5)*20+65, -20, niveau);
         niveau.addNewObject(bonus);
       }
-      if(score % 3 == 0 && niveau.getAvion().getNombreDeViesRestantes()<3 && shouldThisBeInsane(6)){
+      if(score % 3 == 0 && niveau.getAvion().getNombreDeViesRestantes()<3 && shouldThisBeInsane(5)){
         com.mygdx.superpaperplane.Tacos tac = new com.mygdx.superpaperplane.Tacos(random.nextInt(400)+50, -80 - random.nextInt(50), niveau);
         niveau.addNewObject(tac);
       }
@@ -80,7 +80,7 @@ public class EventSpawner{
     	  Jagger jagger = new Jagger(50,50,niveau,this);
     	  niveau.addNewObject(jagger);
       }
-      if(score % 2 == 0 && shouldThisBeInsane(4)){
+      if(score % 3 == 0 && shouldThisBeInsane(4)){
         Pumpkin pump = new Pumpkin(0,750,niveau,this);
         niveau.addNewObject(pump);
       }
@@ -88,7 +88,7 @@ public class EventSpawner{
         Boo boo = new Boo(0,0,niveau);
         niveau.addNewObject(boo);
       }
-      if(!isShootingStar && shouldThisBeInsane(30)){
+      if(!isShootingStar && shouldThisBeInsane(40)){
           ShootingStar shootingStar = new ShootingStar
         		  (0, 0, niveau, this);
           niveau.addNewObject(shootingStar);

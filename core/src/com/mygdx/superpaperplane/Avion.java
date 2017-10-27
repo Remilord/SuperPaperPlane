@@ -177,7 +177,7 @@ public class Avion extends GameObject {
 		}
 		if(nbBottles > 0){
 			timerBottle++;
-			if(timerBottle == 500){
+			if(timerBottle == 600){
 				nbBottles--;
 				timerBottle=0;
 			}

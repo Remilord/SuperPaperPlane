@@ -24,6 +24,7 @@ public class Menu implements Screen {
 	private SpriteBatch sbatch;
 	private TextField txt;
 	private static Music start = Gdx.audio.newMusic(Gdx.files.internal("son/accueil.ogg"));
+	private static Music evil = Gdx.audio.newMusic(Gdx.files.internal("son/evilaugh.ogg"));
 	Niveau game;
 
 	public Menu(Niveau g) {
@@ -40,7 +41,6 @@ public class Menu implements Screen {
 		camera = new OrthographicCamera(500, 800);
 		camera.position.set(500 / 2, 800 / 2, 0);
 		txt = new TextField("Code", this.sk);
-
 	}
 
 	@Override
@@ -63,13 +63,14 @@ public class Menu implements Screen {
 		} else if (Gdx.input.getY() > Gdx.app.getGraphics().getHeight() / 1.6
 				&& Gdx.input.getY() < Gdx.app.getGraphics().getHeight() / 1.4 && Gdx.input.justTouched()
 				&& numecran == 1) {
-			ecran = ecrancode;
+			/*ecran = ecrancode;
 
 			txt.setPosition(0, (float) (Gdx.app.getGraphics().getHeight() / 2.6));
 			txt.setSize(Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight() / 8);
 			scen.addActor(txt);
 			Gdx.input.setInputProcessor(scen);
-			numecran = 3;
+			numecran = 3;*/
+			evil.play();
 		} else if (Gdx.input.getY() > Gdx.app.getGraphics().getHeight() / 1.3
 				&& Gdx.input.getY() < Gdx.app.getGraphics().getHeight() / 1.1 && Gdx.input.justTouched()
 				&& numecran == 1) {
@@ -83,6 +84,8 @@ public class Menu implements Screen {
 			}
 			this.game.setScreen(this.game);
 			this.game.addFire();
+			this.game.addNewObject(new Bat(0,0,this.game));
+			evil.play();
 			this.game.activeListener();
 		} else if (Gdx.input.getY() > Gdx.app.getGraphics().getHeight() / 1.5
 				&& Gdx.input.getY() < Gdx.app.getGraphics().getHeight() / 1.25 && Gdx.input.justTouched()
